@@ -1,0 +1,6 @@
+{% set firstError = error|first %}
+{% set firstErrorMessage = firstError.message %}
+
+<div class="invalid-feedback">
+    {{ firstErrorMessage }}
+</div>

@@ -1,0 +1,39 @@
+$font-size: Helvetica, sans-serif;
+$primary-color: blue !important;
+
+body {
+    min-height: 100vh;
+    height: 100%;
+    font: 100% $font-size;
+}
+
+html {
+    font-size: $font-size;
+}
+
+body {
+    padding-top: 50px;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    display: inline-block;
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: none;
+    color: inherit;
+}
