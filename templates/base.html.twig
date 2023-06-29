@@ -2,7 +2,16 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Welcomeeee!{% endblock %}</title>
+        <meta name="description" content="{% block description %}A simple HTML5 Template for new projects.!{% endblock %}">
+        <meta name="author" content="Łukaszek">
+
+        <meta property="og:title" content="A Basic HTML5 Template">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://www.sitepoint.com/a-basic-html5-template/">
+        <meta property="og:description" content="A simple HTML5 Template for new projects.">
+        <meta property="og:image" content="image.png">
+
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
@@ -13,7 +22,19 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+
+    <body class="min-vh-200 d-flex flex-column">
+        <header>
+            {% include './global/navbar.html.twig' %}
+        </header>
+
+        <main class="flex-grow-1">
+            <div class="container">
+                {% block body %}{% endblock %}
+            </div>
+        </main>
+        <footer>
+            {% include './global/footer.html.twig' %}
+        </footer>
     </body>
 </html>
