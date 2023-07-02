@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Image;
+use App\Entity\Images;
 use App\Entity\User;
-use App\Services\ImageService;
+use App\Services\PictureService;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,57 +25,39 @@ use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(MailerInterface $mailer, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, VerifyEmailHelperInterface $verifyEmailHelper, ImageService $imageService): Response
+    public function register(MailerInterface $mailer, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, VerifyEmailHelperInterface $verifyEmailHelper, PictureService $pictureService): Response
     {
         $form = $this->createForm(RegistrationFormType::class);
+        $user = new User();
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = new User();
+            $image = $form->get('avatar')->getData()[0];
 
-            if ($form->get('firstName')->getData()) {
-                $user->setFirstName($form->get('firstName')->getData());
-            }
+            // On appelle le service d'ajout
+            $avatar = $pictureService->add($image, 'avatars', 300, 300);
 
-            if ($form->get('lastName')->getData()) {
-                $user->setLastName($form->get('lastName')->getData());
-            }
 
-            $user->setEmail($form->get('email')->getData());
-            $user->setLogin($form->get('login')->getData());
-
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('password')->getData()
-                )
-            );
-
-            if ($form->get('avatar')->getData()) {
-                $avatar = $form->get('avatar')->getData();
-
-                $image = $imageService->add($avatar, 'avatars');
-                $user->setAvatar($image);
-            }
+            $user->setAvatar($avatar);
 
             $entityManager->persist($user);
             $entityManager->flush();
 
-//            $signatureComponents = $verifyEmailHelper->generateSignature(
-//                'app_verify_email',
-//                $user->getId(),
-//                $user->getEmail(),
-//                ['id' => $user->getId()]
-//            );
-//
-//            $email = (new Email())
-//                ->from('testtt@gmail.com')
-//                ->to('nowakowski@gmail.com')
-//                ->subject('Welcome typie')
-//                ->text('Test: ' . $signatureComponents->getSignedUrl());
-//
-//            $mailer->send($email);
+            $signatureComponents = $verifyEmailHelper->generateSignature(
+                'app_verify_email',
+                $user->getId(),
+                $user->getEmail(),
+                ['id' => $user->getId()]
+            );
+
+            $email = (new Email())
+                ->from('testtt@gmail.com')
+                ->to('nowakowski@gmail.com')
+                ->subject('Welcome typie')
+                ->text('Test: ' . $signatureComponents->getSignedUrl());
+
+            $mailer->send($email);
 
             return $this->redirectToRoute('app_homepage');
 

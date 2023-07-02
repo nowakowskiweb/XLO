@@ -1,6 +1,8 @@
 {% set firstError = error|first %}
 {% set firstErrorMessage = firstError.message %}
-
-<div class="invalid-feedback">
-    {{ firstErrorMessage }}
+<div class="alert alert-danger d-flex align-items-center" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="12" height="12" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+    <div>
+        {{ firstErrorMessage }}
+    </div>
 </div>

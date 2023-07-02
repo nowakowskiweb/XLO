@@ -2,7 +2,7 @@
 
 namespace App\Security\Voter;
 
-use App\Entity\Announcement;
+use App\Entity\Announcements;
 use PHPUnit\Util\Exception;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -39,7 +39,7 @@ class AnnouncementVoter extends Voter
             return false;
         }
 
-        if (!$subject instanceof Announcement) {
+        if (!$subject instanceof Announcements) {
             throw new \Exception('Wrong type');
         }
 
