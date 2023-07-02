@@ -12,7 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\All;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Email;
@@ -28,39 +27,44 @@ class RegistrationFormType extends AbstractType
             ->add('firstName', TextType::class, [
                 'label' => 'First Name',
                 'constraints' => [
+                    new Length([
+                        'max' => 50,
+                        'maxMessage' => 'Your first name should have at least {{ max }} characters',
+                    ]),
+                    new Regex([
+                        'pattern' => '/^[a-zA-Z]+$/',
+                        'message' => 'Your login should only contain letters.',
+                    ]),
                     new NotBlank([
                         'message' => 'Please enter your first name',
-                    ]),
-                    new Length([
-                        'min' => 2,
-                        'minMessage' => 'Your first name should have at least {{ limit }} characters',
-                        'max' => 5,
                     ]),
                 ],
             ])
             ->add('lastName', TextType::class, [
                 'label' => 'Last Name',
                 'constraints' => [
+                    new Length([
+                        'max' => 50,
+                        'maxMessage' => 'Your last name should have at least {{ max }} characters',
+                    ]),
+                    new Regex([
+                        'pattern' => '/^[a-zA-Z]+$/',
+                        'message' => 'Your login should only contain letters.',
+                    ]),
                     new NotBlank([
                         'message' => 'Please enter your last name',
-                    ]),
-                    new Length([
-                        'min' => 2,
-                        'minMessage' => 'Your last name should have at least {{ limit }} characters',
-                        'max' => 255,
                     ]),
                 ],
             ])
             ->add('login', TextType::class, [
-                'label' => 'Login',
+                'label' => 'Login*',
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter your last name',
                     ]),
                     new Length([
-                        'min' => 2,
-                        'minMessage' => 'Your last name should have at least {{ limit }} characters',
-                        'max' => 255,
+                        'max' => 50,
+                        'maxMessage' => 'Your last name should have at least {{ limit }} characters',
                     ]),
                     new Regex([
                         'pattern' => '/^[a-zA-Z0-9_\-]+$/',
@@ -69,6 +73,8 @@ class RegistrationFormType extends AbstractType
                 ],
             ])
             ->add('email', EmailType::class, [
+                'label' => 'Email*',
+                'required' => true,
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Pole email nie może być puste.',
@@ -83,8 +89,8 @@ class RegistrationFormType extends AbstractType
                 'invalid_message' => 'The password fields must match.',
                 'options' => ['attr' => ['class' => 'password-field']],
                 'required' => true,
-                'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
+                'first_options' => ['label' => 'Password*'],
+                'second_options' => ['label' => 'Repeat Password*'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
@@ -98,16 +104,22 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('avatar', FileType::class, [
                 'label' => 'Avatar',
-                'multiple' => true,
+                'multiple' => false,
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
-                    new All(
-                        new Image([
-                            'maxWidth' => 1280,
-                            'maxWidthMessage' => 'L\'image doit faire {{ max_width }} pixels de large au maximum'
-                        ])
-                    )
+                    new Image([
+                        'maxWidth' => 700,
+                        'maxHeight' => 700,
+                        'maxSize' => '1M',
+                        'maxSizeMessage' => 'The image file is too large. Maximum allowed size is {{ limit }} MB.',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/webp'
+                        ],
+                        'mimeTypesMessage' => 'Invalid image format. Allowed formats are: {{ types }}.',
+                    ])
                 ]
             ])
             ->add('agreeTerms', CheckboxType::class, [

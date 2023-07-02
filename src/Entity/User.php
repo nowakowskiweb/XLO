@@ -24,7 +24,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 10, unique: true)]
+    #[ORM\Column(length: 50, unique: true)]
     private ?string $login = null;
 
     #[ORM\Column(length: 255)]
@@ -42,10 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\Column]
     private bool $emailAuthEnabled = false;
 
-    #[ORM\Column(nullable: true)]
-    private ?string $avatar = null;
-
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Announcements::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Announcement::class, orphanRemoval: true)]
     private Collection $announcements;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -53,6 +50,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
 
     #[ORM\Column]
     private array $roles = [];
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Image $avatar = null;
 
     public function __construct()
     {
@@ -167,18 +167,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
         return $this;
     }
 
-    public function getAvatar(): ?string
-    {
-        return $this->avatar;
-    }
-
-    public function setAvatar(?string $avatar): self
-    {
-        $this->avatar = $avatar;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Announcements>
      */
@@ -247,19 +235,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
          $this->plainPassword = null;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getPlainPassword(): ?string
+
+    public function getAvatar(): ?Image
     {
-        return $this->plainPassword;
+        return $this->avatar;
     }
 
-    /**
-     * @param string|null $plainPassword
-     */
-    public function setPlainPassword(?string $plainPassword): void
+    public function setAvatar(?Image $avatar): self
     {
-        $this->plainPassword = $plainPassword;
+        $this->avatar = $avatar;
+
+        return $this;
     }
 }

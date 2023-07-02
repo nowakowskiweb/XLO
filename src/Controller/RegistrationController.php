@@ -4,63 +4,74 @@ namespace App\Controller;
 
 use App\Entity\Images;
 use App\Entity\User;
-use App\Services\PictureService;
+use App\Services\ImageService;
 use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
-use Symfony\Component\Security\Http\Authenticator\FormLoginAuthenticator;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
 
 class RegistrationController extends AbstractController
 {
     #[Route('/register', name: 'app_register')]
-    public function register(MailerInterface $mailer, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, VerifyEmailHelperInterface $verifyEmailHelper, PictureService $pictureService): Response
+    public function register(MailerInterface $mailer, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, VerifyEmailHelperInterface $verifyEmailHelper, ImageService $imageService): Response
     {
         $form = $this->createForm(RegistrationFormType::class);
-        $user = new User();
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $image = $form->get('avatar')->getData()[0];
+            $user = new User();
 
-            // On appelle le service d'ajout
-            $avatar = $pictureService->add($image, 'avatars', 300, 300);
+            if ($form->get('firstName')->getData()) {
+                $user->setFirstName($form->get('firstName')->getData());
+            }
 
+            if ($form->get('lastName')->getData()) {
+                $user->setLastName($form->get('lastName')->getData());
+            }
 
-            $user->setAvatar($avatar);
+            $user->setEmail($form->get('email')->getData());
+            $user->setLogin($form->get('login')->getData());
+
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('password')->getData()
+                )
+            );
+
+            if ($form->get('avatar')->getData()) {
+                $avatar = $form->get('avatar')->getData();
+
+                $image = $imageService->add($avatar, 'avatars');
+                $user->setAvatar($image);
+            }
 
             $entityManager->persist($user);
             $entityManager->flush();
-
-            $signatureComponents = $verifyEmailHelper->generateSignature(
-                'app_verify_email',
-                $user->getId(),
-                $user->getEmail(),
-                ['id' => $user->getId()]
-            );
-
-            $email = (new Email())
-                ->from('testtt@gmail.com')
-                ->to('nowakowski@gmail.com')
-                ->subject('Welcome typie')
-                ->text('Test: ' . $signatureComponents->getSignedUrl());
-
-            $mailer->send($email);
+//
+//            $signatureComponents = $verifyEmailHelper->generateSignature(
+//                'app_verify_email',
+//                $user->getId(),
+//                $user->getEmail(),
+//                ['id' => $user->getId()]
+//            );
+//
+//            $email = (new Email())
+//                ->from('testtt@gmail.com')
+//                ->to('nowakowski@gmail.com')
+//                ->subject('Welcome typie')
+//                ->text('Test: ' . $signatureComponents->getSignedUrl());
+//
+//            $mailer->send($email);
 
             return $this->redirectToRoute('app_homepage');
-
         }
 
         return $this->render('registration/index.html.twig', [
