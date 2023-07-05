@@ -9,6 +9,8 @@ use App\Form\RegistrationFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mime\Email;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -55,21 +57,22 @@ class RegistrationController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
-//
-//            $signatureComponents = $verifyEmailHelper->generateSignature(
-//                'app_verify_email',
-//                $user->getId(),
-//                $user->getEmail(),
-//                ['id' => $user->getId()]
-//            );
-//
-//            $email = (new Email())
-//                ->from('testtt@gmail.com')
-//                ->to('nowakowski@gmail.com')
-//                ->subject('Welcome typie')
-//                ->text('Test: ' . $signatureComponents->getSignedUrl());
-//
-//            $mailer->send($email);
+
+            $signatureComponents = $verifyEmailHelper->generateSignature(
+                'app_verify_email',
+                $user->getId(),
+                $user->getEmail(),
+                ['id' => $user->getId()]
+            );
+
+            $email = (new Email())
+                ->from('testtt@gmail.com')
+                ->to('nowakowski@gmail.com')
+                ->subject('Welcome typie')
+                ->text('Test: ' . $signatureComponents->getSignedUrl());
+
+            $mailer->send($email);
+
 
             return $this->redirectToRoute('app_homepage');
         }
@@ -106,6 +109,6 @@ class RegistrationController extends AbstractController
     #[Route('/verify/resend', name: 'app_verify_resend_email')]
     public function resendVerifyEmail(Request $request)
     {
-        return new Response('dudddupa');
+        return $this->render('registration/resend-veryfication-email.html.twig');
     }
 }
