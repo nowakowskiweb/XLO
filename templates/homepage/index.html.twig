@@ -1,17 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    {{ parent() }}
     {{ encore_entry_link_tags('homepage/style') }}
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
     {{ encore_entry_script_tags('homepage/script') }}
 {% endblock %}
 
 {% block title %}NazwaFirmy - ogłoszenia{% endblock %}
-
 
 {% block body %}
     {% include 'homepage/sections/background-image.html.twig' %}

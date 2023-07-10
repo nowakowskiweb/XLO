@@ -1,25 +1,6 @@
 .background-image {
   &-section {
-
-  }
-
-  &__background-first {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: red;
-  }
-
-  &__background-second {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: green;
-
+    position: relative;
   }
 
   &__image {
@@ -31,6 +12,23 @@
   &__title {
     &-wrapper {
     }
+
+    position: absolute;
+    top: 20px;
+    left: 0;
+    color: $white;
+  }
+
+
+  &__description {
+    &-wrapper {
+    }
+
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    text-align: end;
+    color: $white;
   }
 
   &__list {
