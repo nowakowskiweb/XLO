@@ -1,0 +1,19 @@
+{% block body %}
+    <section class="background-image-section">
+
+        <img class="background-image__image" src="{{ asset('assets/images/homepage/make-a-phone-call-1280.jpg') }}"
+             srcset="{{ asset('assets/images/homepage/make-a-phone-call-640.jpg') }} 640w,
+                      {{ asset('assets/images/homepage/make-a-phone-call-1280.jpg') }} 1280w,
+                      {{ asset('assets/images/homepage/make-a-phone-call-1920.jpg') }} 1920w"
+             sizes="100vw"
+             alt="Make a phone call" loading="lazy" decoding="async">
+
+        <div class="background-image__title-wrapper row">
+            <div class="container">
+                <h2 class="background-image__title">NazwaFirmy - twoje najlepsze ogłoszenia bla bla</h2>
+            </div>
+        </div>
+
+        </div>
+    </section>
+{% endblock %}

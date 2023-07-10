@@ -1,18 +1,13 @@
-$font-size: Helvetica, sans-serif;
+$font-size: 16px;
 $primary-color: blue !important;
 
 body {
     min-height: 100vh;
     height: 100%;
-    font: 100% $font-size;
 }
 
 html {
     font-size: $font-size;
-}
-
-body {
-    padding-top: 50px;
 }
 
 h1, h2, h3, h4, h5, h6, p {

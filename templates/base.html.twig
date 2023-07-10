@@ -1,40 +1,37 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcomeeee!{% endblock %}</title>
-        <meta name="description" content="{% block description %}A simple HTML5 Template for new projects.!{% endblock %}">
-        <meta name="author" content="Łukaszek">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcomeeee!{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{% block description %}A simple HTML5 Template for new projects.!{% endblock %}">
+    <meta name="author" content="Łukaszek">
 
-        <meta property="og:title" content="A Basic HTML5 Template">
-        <meta property="og:type" content="website">
-        <meta property="og:url" content="https://www.sitepoint.com/a-basic-html5-template/">
-        <meta property="og:description" content="A simple HTML5 Template for new projects.">
-        <meta property="og:image" content="image.png">
+    <meta property="og:title" content="A Basic HTML5 Template">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.sitepoint.com/a-basic-html5-template/">
+    <meta property="og:description" content="A simple HTML5 Template for new projects.">
+    <meta property="og:image" content="image.png">
 
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
 
-    <body class="min-vh-200 d-flex flex-column">
-        <header>
-            {% include './global/navbar.html.twig' %}
-        </header>
+<body class="body">
+{% include './global/navbar.html.twig' %}
 
-        <main class="flex-grow-1">
-            <div class="container">
-                {% block body %}{% endblock %}
-            </div>
-        </main>
-        <footer>
-            {% include './global/footer.html.twig' %}
-        </footer>
-    </body>
+<main class="main">
+    {% block body %}{% endblock %}
+</main>
+{% include './global/footer.html.twig' %}
+
+</body>
 </html>

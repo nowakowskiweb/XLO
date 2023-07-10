@@ -14,6 +14,13 @@ Encore
     // only needed for CDN's or subdirectory deploy
     //.setManifestKeyPrefix('build/')
 
+    .addEntry('homepage/script', './assets/js/homepage/index.js')
+    .addEntry('user/script', './assets/js/user/index.js')
+    .addEntry('registration/script', './assets/js/registration/index.js')
+
+    .addStyleEntry('homepage/style', './assets/styles/homepage/index.scss')
+    .addStyleEntry('user/style', './assets/styles/user/index.scss')
+    .addStyleEntry('registration/style', './assets/styles/registration/index.scss')
     /*
      * ENTRY CONFIG
      *
@@ -21,9 +28,6 @@ Encore
      * and one CSS file (e.g. app.scss) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
-
-    // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
-    .enableStimulusBridge('./assets/controllers.json')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()

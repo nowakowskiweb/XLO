@@ -5,7 +5,9 @@
  * (and its CSS file) in your base layout (base.html.twig).
  */
 import './styles/app.scss';
-
+console.log('123123')
 // start the Stimulus application
 import './bootstrap';
 import 'bootstrap';
+
+
