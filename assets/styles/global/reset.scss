@@ -6,6 +6,10 @@ body {
     height: 100%;
 }
 
+body.scroll-disabled {
+    overflow: hidden;
+}
+
 html {
     font-size: $font-size;
 }
@@ -26,6 +30,7 @@ ul {
 a {
     display: inline-block;
     color: inherit;
+    text-decoration: unset;
 }
 
 a:hover {

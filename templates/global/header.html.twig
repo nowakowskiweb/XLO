@@ -1,32 +1,36 @@
 <header class="header">
-     <nav class="header__navbar">
+    <nav class="header__navbar" data-navbar-menu>
         <div class="header__navbar-container container">
             <a class="header__navbar-brand" href="{{ path('app_homepage') }}">Navbar</a>
-            <div class="header__links-wrapper">
-                <div class="header__link-item">
-                    <a class="header__link" href="{{ path('announcement_index') }}">Ogłoszenia</a>
-                </div>
-                <div class="header__link-item">
-                    <a class="header__link" href="{{ path('announcement_index') }}">Ulubione</a>
-                </div>
-                <div class="header__account-links">
-                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                        <a class="header__account-user" href="{{ path('app_user') }}">Twoje konto</a>
-                        <a class="header__account-logout" href="{{ path('app_logout') }}">Wyloguj</a>
-                    {% else %}
-                        <a class="header__account-login" href="{{ path('app_login') }}">Zaloguj</a>
-                        <a class="header__account-register" href="{{ path('app_register') }}">Załóż konto</a>
-                    {% endif %}
-                </div>
-            </div>
-            <button class="header__mobile-button">
+            <button class="header__mobile-button" data-navbar-button>
                 <div class="header__mobile-span-wrapper">
                     <span class="header__mobile-span header__mobile-span--one"></span>
                     <span class="header__mobile-span header__mobile-span--two"></span>
                     <span class="header__mobile-span header__mobile-span--three"></span>
                 </div>
-                Menu
+                <span class="header__mobile-button-text">
+                    Menu
+                </span>
             </button>
+            <div class="header__links-wrapper">
+                <div class="container">
+                    <div class="header__link-item">
+                        <a class="header__link" href="{{ path('announcement_index') }}">Ogłoszenia</a>
+                    </div>
+                    <div class="header__link-item">
+                        <a class="header__link" href="{{ path('announcement_index') }}">Ulubione</a>
+                    </div>
+                    <div class="header__account-links">
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            <a class="header__account-user" href="{{ path('app_user') }}">Twoje konto</a>
+                            <a class="header__account-logout" href="{{ path('app_logout') }}">Wyloguj</a>
+                        {% else %}
+                            <a class="header__account-login" href="{{ path('app_login') }}">Zaloguj</a>
+                            <a class="header__account-register" href="{{ path('app_register') }}">Załóż konto</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         </div>
-     </nav>
+    </nav>
 </header>
