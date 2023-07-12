@@ -20,13 +20,13 @@
                     <div class="header__link-item">
                         <a class="header__link" href="{{ path('announcement_index') }}">Ulubione</a>
                     </div>
-                    <div class="header__account-links">
+                    <div class="header__links-account">
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                            <a class="header__account-user" href="{{ path('app_user') }}">Twoje konto</a>
-                            <a class="header__account-logout" href="{{ path('app_logout') }}">Wyloguj</a>
+                            <a class="header__link-item header__link-item--user" href="{{ path('app_user') }}">Twoje konto</a>
+                            <a class="header__link-item header__link-item--logout" href="{{ path('app_logout') }}">Wyloguj</a>
                         {% else %}
-                            <a class="header__account-login" href="{{ path('app_login') }}">Zaloguj</a>
-                            <a class="header__account-register" href="{{ path('app_register') }}">Załóż konto</a>
+                            <a class="header__link-item header__link-item--login" href="{{ path('app_login') }}">Zaloguj</a>
+                            <a class="header__link-item header__link-item-register" href="{{ path('app_register') }}">Załóż konto</a>
                         {% endif %}
                     </div>
                 </div>

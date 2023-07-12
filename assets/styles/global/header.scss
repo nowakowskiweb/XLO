@@ -8,16 +8,19 @@
     left: 0;
     color: $white;
     display: flex;
-    //justify-content: center;
     align-items: center;
-    height: 40px;
+    height: auto;
+    padding: 10px 0;
   }
 
   &__navbar-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 20px;
+  }
+
+  &__navbar-brand {
+    font-size: 36px;
   }
 
 
@@ -25,7 +28,6 @@
     &-button {
       width: auto;
       height: 40px;
-      //margin-left: auto;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -33,6 +35,10 @@
       border-radius: 10px;
       border: 2px solid transparent;
       transition: border .15s linear;
+
+      @include media-breakpoint-up(md) {
+        display: none;
+      }
 
       &-text {
         margin-left: 10px;
@@ -85,11 +91,36 @@
     z-index: -1;
     padding: 60px 10px 20px;
     transition: left .3s .1s cubic-bezier(0.77, 0.2, 0.05, 1);
+
+    @include media-breakpoint-up(md) {
+      position: static;
+      width: auto;
+      height: auto;
+      padding: 0;
+      background-color: transparent;
+
+      .container {
+        display: flex;
+      }
+    }
   }
 
-  &__account-links {
+  &__links-account {
     display: flex;
     flex-direction: column;
+
+    @include media-breakpoint-up(md) {
+      flex-direction: row;
+    }
+  }
+
+  &__link-item {
+    @include media-breakpoint-up(md) {
+      padding: 5px;
+      border-radius: 5px;
+      border: 2px solid $white;
+      margin-left: 10px;
+    }
   }
 
   //  SHOW MENU
