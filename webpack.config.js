@@ -20,10 +20,12 @@ Encore
      * and one CSS file (e.g. app.scss) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/js/app.js')
+    .addEntry('announcement/script', './assets/js/announcement/index.js')
     .addEntry('homepage/script', './assets/js/homepage/index.js')
     .addEntry('user/script', './assets/js/user/index.js')
     .addEntry('registration/script', './assets/js/registration/index.js')
 
+    .addStyleEntry('announcement/style', './assets/styles/announcement/index.scss')
     .addStyleEntry('homepage/style', './assets/styles/homepage/index.scss')
     .addStyleEntry('user/style', './assets/styles/user/index.scss')
     .addStyleEntry('registration/style', './assets/styles/registration/index.scss')

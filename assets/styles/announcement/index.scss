@@ -1,16 +1,10 @@
+/** Global styles: variables/fonts/global modules */
+@import "../app.scss";
+
+/** Announcement Partials */
 .header {
   &__navbar {
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    z-index: 10;
-    top: 0;
-    left: 0;
-    color: $white;
-    display: flex;
-    align-items: center;
-    height: auto;
-    padding: rem-calc(10px) 0;
+    background-color: #EAC6B7;
   }
 
   &__navbar-container {

@@ -1,3 +1,30 @@
-<section class="benefits-section">
-    <h1>Benefits Section</h1>
+<section class="benefits">
+    <div class="container">
+        <div class="benefits__image-wrapper col-md-4 col-lg-6">
+            <img class="benefits__image" src="{{ asset('assets/images/homepage/students-1280.jpg') }}"
+                 srcset="{{ asset('assets/images/homepage/students-640.jpg') }} 640w,
+                      {{ asset('assets/images/homepage/students-1280.jpg') }} 1280w,
+                      {{ asset('assets/images/homepage/students-1920.jpg') }} 1920w"
+                 sizes="50vw" data-benefits-image
+                 alt="Students" loading="lazy" decoding="async">
+        </div>
+        <div class="col-12 col-md-8 col-lg-6 d-md-flex flex-column">
+            <div class="benefits__benefit-wrapper row" data-benefits-benefit-wrapper>
+                <h3 class="benefits__benefit benefits__benefit--one">Szybkie i proste wystawianie ogłoszenia</h3>
+            </div>
+
+            <div class="benefits__benefit-wrapper row" data-benefits-benefit-wrapper>
+                <h3 class="benefits__benefit benefits__benefit--two">Zaawansowane zarządzanie ogłoszeniami</h3>
+            </div>
+
+            <div class="benefits__benefit-wrapper row" data-benefits-benefit-wrapper>
+                <h3 class="benefits__benefit benefits__benefit--three">Dodawanie wielu ogłoszeń</h3>
+            </div>
+
+            <div class="benefits__benefit-wrapper row" data-benefits-benefit-wrapper>
+                <h3 class="benefits__benefit">Komunikacja z zainteresowanymi</h3>
+            </div>
+        </div>
+
+    </div>
 </section>
