@@ -1,7 +1,5 @@
-import '../../styles/homepage/index.scss';
-
-import { BackgroundImageTitle } from "../homepage/scripts/background-images";
-import { Benefits } from "../homepage/scripts/benefits";
+import { BackgroundImageTitle } from "./sections/background-images";
+import { Benefits } from "./sections/benefits";
 
 document.addEventListener("DOMContentLoaded", () => {
     try {
