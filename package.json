@@ -27,6 +27,7 @@
     },
     "dependencies": {
         "@popperjs/core": "^2.11.7",
-        "resolve-url-loader": "^5.0.0"
+        "resolve-url-loader": "^5.0.0",
+        "tom-select": "^2.2.2"
     }
 }

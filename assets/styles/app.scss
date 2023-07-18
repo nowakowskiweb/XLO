@@ -2,7 +2,7 @@
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins";
-@import "bootstrap/scss/bootstrap";
+@import "bootstrap";
 
 /** Global */
 @import "global/fonts.scss";
@@ -10,3 +10,6 @@
 @import "global/reset.scss";
 @import "global/header.scss";
 @import "global/footer.scss";
+
+/** Packages */
+@import '~tom-select/dist/scss/tom-select.bootstrap5';

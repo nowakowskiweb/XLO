@@ -1,8 +1,6 @@
 export class Benefits {
-
     benefitWrapperActive = 'benefits__benefit-wrapper--active';
     benefitImageActive = 'benefits__image--active';
-
 
     constructor() {
         const initialElements = this.setInitialElements();
