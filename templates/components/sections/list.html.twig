@@ -1,30 +1,120 @@
-<section class="announcements-filters">
+{% set cards = [
+    {
+        'image': '/images/ogloszenie1.jpg',
+        'title': 'Ogłoszenie 1',
+        'description': 'To jest pierwsze ogłoszenie',
+        'link': '/ogloszenie/1',
+    },
+    {
+        'image': '/images/ogloszenie2.jpg',
+        'title': 'Ogłoszenie 2',
+        'description': 'To jest drugie ogłoszenie',
+        'link': '/ogloszenie/2',
+    },
+    {
+        'image': '/images/ogloszenie3.jpg',
+        'title': 'Ogłoszenie 3',
+        'description': 'To jest trzecie ogłoszenie',
+        'link': '/ogloszenie/3',
+    },
+    {
+        'image': '/images/ogloszenie1.jpg',
+        'title': 'Ogłoszenie 1',
+        'description': 'To jest pierwsze ogłoszenie',
+        'link': '/ogloszenie/1',
+    },
+    {
+        'image': '/images/ogloszenie2.jpg',
+        'title': 'Ogłoszenie 2',
+        'description': 'To jest drugie ogłoszenie',
+        'link': '/ogloszenie/2',
+    },
+    {
+        'image': '/images/ogloszenie3.jpg',
+        'title': 'Ogłoszenie 3',
+        'description': 'To jest trzecie ogłoszenie',
+        'link': '/ogloszenie/3',
+    },
+    {
+        'image': '/images/ogloszenie1.jpg',
+        'title': 'Ogłoszenie 1',
+        'description': 'To jest pierwsze ogłoszenie',
+        'link': '/ogloszenie/1',
+    },
+    {
+        'image': '/images/ogloszenie2.jpg',
+        'title': 'Ogłoszenie 2',
+        'description': 'To jest drugie ogłoszenie',
+        'link': '/ogloszenie/2',
+    },
+    {
+        'image': '/images/ogloszenie3.jpg',
+        'title': 'Ogłoszenie 3',
+        'description': 'To jest trzecie ogłoszenie',
+        'link': '/ogloszenie/3',
+    },
+    {
+        'image': '/images/ogloszenie1.jpg',
+        'title': 'Ogłoszenie 1',
+        'description': 'To jest pierwsze ogłoszenie',
+        'link': '/ogloszenie/1',
+    },
+    {
+        'image': '/images/ogloszenie2.jpg',
+        'title': 'Ogłoszenie 2',
+        'description': 'To jest drugie ogłoszenie',
+        'link': '/ogloszenie/2',
+    },
+    {
+        'image': '/images/ogloszenie3.jpg',
+        'title': 'Ogłoszenie 3',
+        'description': 'To jest trzecie ogłoszenie',
+        'link': '/ogloszenie/3',
+    },
+    {
+        'image': '/images/ogloszenie1.jpg',
+        'title': 'Ogłoszenie 1',
+        'description': 'To jest pierwsze ogłoszenie',
+        'link': '/ogloszenie/1',
+    },
+    {
+        'image': '/images/ogloszenie2.jpg',
+        'title': 'Ogłoszenie 2',
+        'description': 'To jest drugie ogłoszenie',
+        'link': '/ogloszenie/2',
+    },
+    {
+        'image': '/images/ogloszenie3.jpg',
+        'title': 'Ogłoszenie 3',
+        'description': 'To jest trzecie ogłoszenie',
+        'link': '/ogloszenie/3',
+    },
+    {
+        'image': '/images/ogloszenie1.jpg',
+        'title': 'Ogłoszenie 1',
+        'description': 'To jest pierwsze ogłoszenie',
+        'link': '/ogloszenie/1',
+    },
+    {
+        'image': '/images/ogloszenie2.jpg',
+        'title': 'Ogłoszenie 2',
+        'description': 'To jest drugie ogłoszenie',
+        'link': '/ogloszenie/2',
+    },
+    {
+        'image': '/images/ogloszenie3.jpg',
+        'title': 'Ogłoszenie 3',
+        'description': 'To jest trzecie ogłoszenie',
+        'link': '/ogloszenie/3',
+    },
+] %}
+
+<section class="list">
     <div class="container">
-        {% include '@atoms/searching.html.twig' %}
-        <div class="announcements-filters__advanced-filters d-md-flex justify-content-around align-items-center flex-wrap">
-            {% include '@atoms/input-number.twig' %}
-            {% include '@atoms/select.html.twig' with {
-                'label': 'Sorting',
-                'options': ['amazing', 'awesome', 'cool', 'excellent', 'great', 'neat', 'superb', 'wonderful'],
-                'id': 'select-sorting',
-                'name': 'select-sorting',
-                'classes': 'select-sorting flex-grow-1',
-            } %}
-            {% include '@atoms/select.html.twig' with {
-                'label': 'Conditions',
-                'options': ['amazing', 'awesome', 'cool', 'excellent', 'great', 'neat', 'superb', 'wonderful'],
-                'id': 'select-conditions',
-                'name': 'select-conditions',
-                'classes': 'select-conditions flex-grow-1',
-            } %}
-            {% include '@atoms/select.html.twig' with {
-                'label': 'Categories',
-                'options': ['amazing', 'awesome', 'cool', 'excellent', 'great', 'neat', 'superb', 'wonderful'],
-                'id': 'select-categories',
-                'name': 'select-categories',
-                'classes': 'select-categories flex-grow-1',
-                'multiple': true
-            } %}
-        </div>
+        {% for card in cards %}
+            <div class="list__item">
+                {% include '@molecules/card.html.twig' with card %}
+            </div>
+        {% endfor %}
     </div>
 </section>

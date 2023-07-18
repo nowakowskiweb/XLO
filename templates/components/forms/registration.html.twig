@@ -8,7 +8,7 @@
                class="form-control {% if registrationForm.firstName.vars.errors is not empty %}is-invalid{% elseif registrationForm.firstName.vars.value is not empty %}is-valid{% endif %}"
                value="{{ registrationForm.firstName.vars.value }}"/>
         {% if registrationForm.firstName.vars.errors is not empty %}
-            {% include 'forms/error.html.twig' with {'error': registrationForm.firstName.vars.errors} %}
+            {% include '@molecules/error.html.twig' with {'error': registrationForm.firstName.vars.errors} %}
         {% endif %}
         <div class="valid-feedback">
             Jest git
@@ -22,7 +22,7 @@
                class="form-control {% if registrationForm.lastName.vars.errors is not empty %}is-invalid{% elseif registrationForm.lastName.vars.value is not empty %}is-valid{% endif %}"
                value="{{ registrationForm.lastName.vars.value }}"/>
         {% if registrationForm.lastName.vars.errors is not empty %}
-            {% include 'forms/error.html.twig' with {'error': registrationForm.lastName.vars.errors} %}
+            {% include '@molecules/error.html.twig' with {'error': registrationForm.lastName.vars.errors} %}
         {% endif %}
         <div class="valid-feedback">
             Jest git
@@ -35,7 +35,7 @@
                class="form-control {% if registrationForm.login.vars.errors is not empty %}is-invalid{% elseif registrationForm.login.vars.errors is empty and registrationForm.login.vars.value is not empty %}is-valid{% endif %}"
                value="{{ registrationForm.login.vars.value }}" required/>
         {% if registrationForm.login.vars.errors is not empty %}
-            {% include 'forms/error.html.twig' with {'error': registrationForm.login.vars.errors} %}
+            {% include '@molecules/error.html.twig' with {'error': registrationForm.login.vars.errors} %}
         {% endif %}
         <div class="valid-feedback">
             Jest git
@@ -49,7 +49,7 @@
                value="{{ registrationForm.email.vars.value }}" required/>
         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
         {% if registrationForm.email.vars.errors is not empty %}
-            {% include 'forms/error.html.twig' with {'error': registrationForm.email.vars.errors} %}
+            {% include '@molecules/error.html.twig' with {'error': registrationForm.email.vars.errors} %}
         {% endif %}
         <div class="valid-feedback">
             Jest git
@@ -64,7 +64,7 @@
                autocomplete="new-password"
                required/>
         {% if registrationForm.password.first.vars.errors is not empty %}
-            {% include 'forms/error.html.twig' with {'error': registrationForm.password.first.vars.errors} %}
+            {% include '@molecules/error.html.twig' with {'error': registrationForm.password.first.vars.errors} %}
         {% endif %}
         <div class="valid-feedback">
             Jest git
@@ -86,7 +86,7 @@
                name="{{ registrationForm.avatar.vars.full_name }}"
                class="form-control {% if registrationForm.avatar.vars.errors is not empty %}is-invalid{% elseif registrationForm.avatar.vars.value is not empty %}is-valid{% endif %}">
         {% if registrationForm.avatar.vars.errors|length > 0 %}
-            {% include 'forms/error.html.twig' with {'error': registrationForm.avatar.vars.errors} %}
+            {% include '@molecules/error.html.twig' with {'error': registrationForm.avatar.vars.errors} %}
         {% endif %}
     </div>
     <div class="mb-3 form-group">
@@ -100,7 +100,7 @@
             {{ registrationForm.agreeTerms.vars.label }}
         </label>
         {% if registrationForm.agreeTerms.vars.errors|length > 0 %}
-            {% include 'forms/error.html.twig' with {'error': registrationForm.agreeTerms.vars.errors} %}
+            {% include '@molecules/error.html.twig' with {'error': registrationForm.agreeTerms.vars.errors} %}
         {% endif %}
     </div>
     {{ form_row(registrationForm._token) }}

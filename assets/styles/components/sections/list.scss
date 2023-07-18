@@ -1,3 +1,9 @@
-.announcements-list {
-  background-color: black;
+section.list {
+  background-color: #eac6b766;
+  flex-wrap: wrap;
+  display: flex;
+
+  &__item {
+    background-color: red;
+  }
 }
