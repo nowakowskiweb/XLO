@@ -1,7 +1,8 @@
 const Encore = require('@symfony/webpack-encore');
+const path = require('path');
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
-// It's useful when you use tools that rely on webpack.config.js file.
+// It's useful when you use tools that rely on webpack.config.scripts file.
 if (!Encore.isRuntimeEnvironmentConfigured()) {
     Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
 }
@@ -16,23 +17,41 @@ Encore
     /*
      * ENTRY CONFIG
      *
-     * Each entry will result in one JavaScript file (e.g. app.js)
+     * Each entry will result in one JavaScript file (e.g. app.scripts)
      * and one CSS file (e.g. app.scss) if your JavaScript imports CSS.
      */
-    .addEntry('app', './assets/js/app.js')
-    .addEntry('announcement/script', './assets/js/announcement/index.js')
-    .addEntry('homepage/script', './assets/js/homepage/index.js')
-    .addEntry('user/script', './assets/js/user/index.js')
-    .addEntry('registration/script', './assets/js/registration/index.js')
+    .addEntry('app', './assets/scripts/app.js')
+    .addEntry('announcement/script', './assets/scripts/pages/announcement.js')
+    .addEntry('homepage/script', './assets/scripts/pages/homepage.js')
+    .addEntry('user/script', './assets/scripts/pages/user.js')
+    .addEntry('registration/script', './assets/scripts/pages/registration.js')
 
-    .addStyleEntry('announcement/style', './assets/styles/announcement/index.scss')
-    .addStyleEntry('homepage/style', './assets/styles/homepage/index.scss')
-    .addStyleEntry('user/style', './assets/styles/user/index.scss')
-    .addStyleEntry('registration/style', './assets/styles/registration/index.scss')
+    .addStyleEntry('announcement/style', './assets/styles/pages/announcement.scss')
+    .addStyleEntry('homepage/style', './assets/styles/pages/homepage.scss')
+    .addStyleEntry('user/style', './assets/styles/pages/user.scss')
+    .addStyleEntry('registration/style', './assets/styles/pages/registration.scss')
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
+    .addAliases({
+        // SCRIPTS
+        '@atoms-scripts': path.resolve(__dirname, 'assets/scripts/components/atoms'),
+        '@forms-scripts': path.resolve(__dirname, 'assets/scripts/components/forms'),
+        '@molecules-scripts': path.resolve(__dirname, 'assets/scripts/components/molecules'),
+        '@sections-scripts': path.resolve(__dirname, 'assets/scripts/components/sections'),
+        '@helpers-scripts': path.resolve(__dirname, 'assets/scripts/helpers'),
+        '@layouts-scripts': path.resolve(__dirname, 'assets/scripts/layouts'),
+        '@pages-scripts': path.resolve(__dirname, 'assets/scripts/pages'),
 
-    // will require an extra script tag for runtime.js
+        // STYLES
+        '@atoms-styles': path.resolve(__dirname, 'assets/styles/components/atoms'),
+        '@forms-styles': path.resolve(__dirname, 'assets/styles/components/forms'),
+        '@molecules-styles': path.resolve(__dirname, 'assets/styles/components/molecules'),
+        '@sections-styles': path.resolve(__dirname, 'assets/styles/components/sections'),
+        '@helpers-styles': path.resolve(__dirname, 'assets/styles/helpers'),
+        '@layouts-styles': path.resolve(__dirname, 'assets/styles/layouts'),
+        '@pages-styles': path.resolve(__dirname, 'assets/styles/pages'),
+    })
+    // will require an extra script tag for runtime.scripts
     // but, you probably want this, unless you're building a single-page app
     .enableSingleRuntimeChunk()
 

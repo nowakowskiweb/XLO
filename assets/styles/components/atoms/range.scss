@@ -1,0 +1,72 @@
+.range {
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+
+  @include media-breakpoint-up(md) {
+    justify-content: start;
+    flex-wrap: nowrap;
+  }
+
+  &__price-wrapper {
+    position: relative;
+    border-radius: 10px;
+    padding: 6px;
+    width: 100%;
+    max-width: 200px;
+    border: 2px solid #EAC6B7;
+    margin: 25px 15px 0;
+  }
+
+  &__price-input {
+    position: relative;
+    z-index: 1;
+    background: transparent;
+    -moz-appearance: textfield;
+    border: unset;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  &__price-label {
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    transform: translateY(-50%);
+    background: white;
+    padding: 0 2px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+  }
+
+  &__price-icon {
+    display: block;
+    background-image: url("../../../icons/icon-money.svg");
+    width: 35px;
+    height: 28px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    border-left: 1px solid #EAC6B7;
+  }
+
+  &__price-input:active ~ &__price-label,
+  &__price-input:focus ~ &__price-label,
+  &__price-input:not(:placeholder-shown) ~ &__price-label,
+  &__price-input:not(:placeholder-shown) ~ &__price-label {
+    top: -5px;
+    font-size: 10px;
+    border: 1px solid #A18678;
+  }
+}

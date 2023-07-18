@@ -1,6 +1,13 @@
 twig:
     default_path: '%kernel.project_dir%/templates'
-    cache:  false
+    paths:
+        '%kernel.project_dir%/templates/layouts': layouts
+        '%kernel.project_dir%/templates/pages': pages
+        '%kernel.project_dir%/templates/components/atoms': atoms
+        '%kernel.project_dir%/templates/components/forms': forms
+        '%kernel.project_dir%/templates/components/molecules': molecules
+        '%kernel.project_dir%/templates/components/sections': sections
+    cache: false
 when@test:
     twig:
         strict_variables: true

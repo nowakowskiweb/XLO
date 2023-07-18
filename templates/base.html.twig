@@ -20,12 +20,12 @@
 </head>
 
 <body class="body">
-{% include './global/header.html.twig' %}
+{% include '@layouts/header.html.twig' %}
 
 <main class="main">
     {% block body %}{% endblock %}
 </main>
-{% include './global/footer.html.twig' %}
+{% include '@layouts/footer.html.twig' %}
 
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}

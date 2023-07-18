@@ -1,0 +1,49 @@
+<header class="header">
+    <nav class="navbar" data-navbar-menu>
+        <div class="navbar__container container">
+            <a class="navbar__brand" href="{{ path('app_homepage') }}">Navbar</a>
+            <button class="navbar__mobile-button" data-navbar-button>
+                <div class="navbar__mobile-span-wrapper">
+                    <span class="navbar__mobile-span navbar__mobile-span--one"></span>
+                    <span class="navbar__mobile-span navbar__mobile-span--two"></span>
+                    <span class="navbar__mobile-span navbar__mobile-span--three"></span>
+                </div>
+                <span class="navbar__mobile-button-text">
+                    Menu
+                </span>
+            </button>
+            <div class="navbar__links-wrapper">
+                <div class="container">
+                    <div class="navbar__link-item navbar__link-item--homepage">
+                        <a class="navbar__link" href="{{ path('announcement_index') }}">Strona główna</a>
+                    </div>
+                    <div class="navbar__link-item">
+                        <a class="navbar__link" href="{{ path('announcement_index') }}">Ogłoszenia</a>
+                    </div>
+                    <div class="navbar__link-item">
+                        <a class="navbar__link" href="{{ path('announcement_index') }}">Ulubione</a>
+                    </div>
+                    <div class="navbar__links-account">
+                        {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                            <div class=" navbar__link-item">
+                                <a class="navbar__link navbar__link--user" href="{{ path('app_user') }}">Twoje konto</a>
+                            </div>
+                            <div class=" navbar__link-item">
+                                <a class="navbar__link navbar__link--logout" href="{{ path('app_logout') }}">Wyloguj</a>
+                            </div>
+
+                        {% else %}
+                            <div class=" navbar__link-item">
+                                <a class="navbar__link navbar__link-item--login" href="{{ path('app_login') }}">Zaloguj</a>
+                            </div>
+                            <div class=" navbar__link-item">
+                                <a class="navbar__link navbar__link-item-register"
+                                   href="{{ path('app_register') }}">Załóż konto</a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>

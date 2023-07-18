@@ -1,0 +1,30 @@
+<section class="announcements-filters">
+    <div class="container">
+        {% include '@atoms/searching.html.twig' %}
+        <div class="announcements-filters__advanced-filters d-md-flex justify-content-around align-items-center flex-wrap">
+            {% include '@atoms/input-number.twig' %}
+            {% include '@atoms/select.html.twig' with {
+                'label': 'Sorting',
+                'options': ['amazing', 'awesome', 'cool', 'excellent', 'great', 'neat', 'superb', 'wonderful'],
+                'id': 'select-sorting',
+                'name': 'select-sorting',
+                'classes': 'select-sorting flex-grow-1',
+            } %}
+            {% include '@atoms/select.html.twig' with {
+                'label': 'Conditions',
+                'options': ['amazing', 'awesome', 'cool', 'excellent', 'great', 'neat', 'superb', 'wonderful'],
+                'id': 'select-conditions',
+                'name': 'select-conditions',
+                'classes': 'select-conditions flex-grow-1',
+            } %}
+            {% include '@atoms/select.html.twig' with {
+                'label': 'Categories',
+                'options': ['amazing', 'awesome', 'cool', 'excellent', 'great', 'neat', 'superb', 'wonderful'],
+                'id': 'select-categories',
+                'name': 'select-categories',
+                'classes': 'select-categories flex-grow-1',
+                'multiple': true
+            } %}
+        </div>
+    </div>
+</section>

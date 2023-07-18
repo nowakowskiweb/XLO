@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('homepage/style') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('homepage/script') }}
+{% endblock %}
+
+{% block title %}NazwaFirmy - ogłoszenia{% endblock %}
+
+{% block body %}
+        {% include '@sections/background-image.html.twig' %}
+        {% include '@sections/benefits.html.twig' %}
+        {% include '@sections/slider.html.twig' %}
+        {% include '@sections/registration-steps.html.twig' %}
+{% endblock %}

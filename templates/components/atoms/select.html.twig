@@ -1,0 +1,8 @@
+<div class="select {{ classes|default('') }}">
+    <select id="{{ id }}" name="{{ name }}" {% if multiple|default(false) %}multiple{% endif %}>
+        {% for option in options %}
+            <option>{{ option }}</option>
+        {% endfor %}
+    </select>
+    <label for="{{ id }}" class="select__label">{{ label }}</label>
+</div>

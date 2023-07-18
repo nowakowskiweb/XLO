@@ -5,11 +5,12 @@
 @import "bootstrap";
 
 /** Global */
-@import "global/fonts.scss";
-@import "global/functions.scss";
-@import "global/reset.scss";
-@import "global/header.scss";
-@import "global/footer.scss";
+@import "helpers/functions.scss";
+@import "layouts/fonts.scss";
+@import "layouts/reset.scss";
+@import "layouts/navbar.scss";
+@import "layouts/header.scss";
+@import "layouts/footer.scss";
 
 /** Packages */
 @import '~tom-select/dist/scss/tom-select.bootstrap5';
