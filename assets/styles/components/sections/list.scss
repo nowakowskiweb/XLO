@@ -1,9 +1,27 @@
-section.list {
+@import "@molecules-styles/card.scss";
+
+
+.list {
   background-color: #eac6b766;
   flex-wrap: wrap;
   display: flex;
+  padding: 50px 20px;
+
+  &__container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    @include media-breakpoint-up(md) {
+      justify-content: space-around;
+    }
+  }
 
   &__item {
-    background-color: red;
+    border: 10px;
+    margin: 25px 10px;
+    max-width: 300px;
+    width: 100%;
   }
 }

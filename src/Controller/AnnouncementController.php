@@ -12,7 +12,7 @@ class AnnouncementController extends BaseController
     #[Route('/announcement', name: 'announcement_index')]
     public function index(): Response
     {
-        return $this->render('@pages/announcement.html.twig');
+        return $this->render('@pages/announcements-list.html.twig');
     }
 
     #[Route('/announcement/add', name: 'announcement_add')]

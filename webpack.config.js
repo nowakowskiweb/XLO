@@ -21,12 +21,12 @@ Encore
      * and one CSS file (e.g. app.scss) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/scripts/app.js')
-    .addEntry('announcement/script', './assets/scripts/pages/announcement.js')
+    .addEntry('announcements-list/script', './assets/scripts/pages/announcement.js')
     .addEntry('homepage/script', './assets/scripts/pages/homepage.js')
     .addEntry('user/script', './assets/scripts/pages/user.js')
     .addEntry('registration/script', './assets/scripts/pages/registration.js')
 
-    .addStyleEntry('announcement/style', './assets/styles/pages/announcement.scss')
+    .addStyleEntry('announcements-list/style', './assets/styles/pages/announcements-list.scss')
     .addStyleEntry('homepage/style', './assets/styles/pages/homepage.scss')
     .addStyleEntry('user/style', './assets/styles/pages/user.scss')
     .addStyleEntry('registration/style', './assets/styles/pages/registration.scss')

@@ -21,47 +21,41 @@ class UserFixtures extends Fixture
     {
         $faker = Factory::create();
 
-        $user = new User();
-        $user->setEmail('admin@gmail.com');
-        $user->setLogin("admin");
-        $user->setFirstName('Łukasz');
-        $user->setVerified(true);
-        $user->setRoles(['ROLE_ADMIN']);
+        // Create admin user
+        $admin = new User();
+        $admin->setEmail('admin@gmail.com');
+        $admin->setLogin('admin');
+        $admin->setFirstName('Łukasz');
+        $admin->setVerified(true);
+        $admin->setRoles(['ROLE_ADMIN']);
+        $hashedPassword = $this->passwordHasher->hashPassword($admin, 'admin');
+        $admin->setPassword($hashedPassword);
+        $manager->persist($admin);
 
-        $plainPassword = 'test';
-        $hashedPassword = $this->passwordHasher->hashPassword($user, $plainPassword);
-        $user->setPassword($hashedPassword);
-
-        $manager->persist($user);
-
-        $user2 = new User();
-        $user2->setEmail('user@gmail.com');
-        $user2->setLogin("user");
-        $user2->setFirstName('Łukasz');
-        $user2->setVerified(true);
-        $user2->setRoles(['ROLE_USER']);
-
-        $plainPassword = 'test';
-        $hashedPassword = $this->passwordHasher->hashPassword($user2, $plainPassword);
-        $user2->setPassword($hashedPassword);
-
-        $manager->persist($user2);
-
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 30; $i++) {
             $user = new User();
 
-            $user->setEmail($faker->email);
-            $user->setLogin("anita" . $i);
+            $user->setEmail($faker->unique()->email); // Generate a unique email for each user
+            $user->setLogin($this->generateUniqueLogin($faker, $i));
             $user->setFirstName($faker->firstName);
+            $user->setLastName($faker->lastName);
             $user->setVerified(false);
+            $user->setRoles(['ROLE_USER']);
 
             $plainPassword = 'test' . $i;
             $hashedPassword = $this->passwordHasher->hashPassword($user, $plainPassword);
             $user->setPassword($hashedPassword);
-
             $manager->persist($user);
+            $this->addReference(User::class . '_' . $i, $user);
         }
 
         $manager->flush();
+    }
+
+    private function generateUniqueLogin($faker, $index): string
+    {
+        $login = $faker->userName;
+        // Adding a suffix to make it unique, in this case, using the index
+        return $login . $index;
     }
 }
