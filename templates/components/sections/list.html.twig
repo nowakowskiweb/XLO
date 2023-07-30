@@ -1,120 +1,15 @@
-{% set cards = [
-    {
-        'image': '/images/ogloszenie1.jpg',
-        'title': 'Ogłoszenie 1',
-        'description': 'To jest pierwsze ogłoszenie',
-        'link': '/ogloszenie/1',
-    },
-    {
-        'image': '/images/ogloszenie2.jpg',
-        'title': 'Ogłoszenie 2',
-        'description': 'To jest drugie ogłoszenie',
-        'link': '/ogloszenie/2',
-    },
-    {
-        'image': '/images/ogloszenie3.jpg',
-        'title': 'Ogłoszenie 3',
-        'description': 'To jest trzecie ogłoszenie',
-        'link': '/ogloszenie/3',
-    },
-    {
-        'image': '/images/ogloszenie1.jpg',
-        'title': 'Ogłoszenie 1',
-        'description': 'To jest pierwsze ogłoszenie',
-        'link': '/ogloszenie/1',
-    },
-    {
-        'image': '/images/ogloszenie2.jpg',
-        'title': 'Ogłoszenie 2',
-        'description': 'To jest drugie ogłoszenie',
-        'link': '/ogloszenie/2',
-    },
-    {
-        'image': '/images/ogloszenie3.jpg',
-        'title': 'Ogłoszenie 3',
-        'description': 'To jest trzecie ogłoszenie',
-        'link': '/ogloszenie/3',
-    },
-    {
-        'image': '/images/ogloszenie1.jpg',
-        'title': 'Ogłoszenie 1',
-        'description': 'To jest pierwsze ogłoszenie',
-        'link': '/ogloszenie/1',
-    },
-    {
-        'image': '/images/ogloszenie2.jpg',
-        'title': 'Ogłoszenie 2',
-        'description': 'To jest drugie ogłoszenie',
-        'link': '/ogloszenie/2',
-    },
-    {
-        'image': '/images/ogloszenie3.jpg',
-        'title': 'Ogłoszenie 3',
-        'description': 'To jest trzecie ogłoszenie',
-        'link': '/ogloszenie/3',
-    },
-    {
-        'image': '/images/ogloszenie1.jpg',
-        'title': 'Ogłoszenie 1',
-        'description': 'To jest pierwsze ogłoszenie',
-        'link': '/ogloszenie/1',
-    },
-    {
-        'image': '/images/ogloszenie2.jpg',
-        'title': 'Ogłoszenie 2',
-        'description': 'To jest drugie ogłoszenie',
-        'link': '/ogloszenie/2',
-    },
-    {
-        'image': '/images/ogloszenie3.jpg',
-        'title': 'Ogłoszenie 3',
-        'description': 'To jest trzecie ogłoszenie',
-        'link': '/ogloszenie/3',
-    },
-    {
-        'image': '/images/ogloszenie1.jpg',
-        'title': 'Ogłoszenie 1',
-        'description': 'To jest pierwsze ogłoszenie',
-        'link': '/ogloszenie/1',
-    },
-    {
-        'image': '/images/ogloszenie2.jpg',
-        'title': 'Ogłoszenie 2',
-        'description': 'To jest drugie ogłoszenie',
-        'link': '/ogloszenie/2',
-    },
-    {
-        'image': '/images/ogloszenie3.jpg',
-        'title': 'Ogłoszenie 3',
-        'description': 'To jest trzecie ogłoszenie',
-        'link': '/ogloszenie/3',
-    },
-    {
-        'image': '/images/ogloszenie1.jpg',
-        'title': 'Ogłoszenie 1',
-        'description': 'To jest pierwsze ogłoszenie',
-        'link': '/ogloszenie/1',
-    },
-    {
-        'image': '/images/ogloszenie2.jpg',
-        'title': 'Ogłoszenie 2',
-        'description': 'To jest drugie ogłoszenie',
-        'link': '/ogloszenie/2',
-    },
-    {
-        'image': '/images/ogloszenie3.jpg',
-        'title': 'Ogłoszenie 3',
-        'description': 'To jest trzecie ogłoszenie',
-        'link': '/ogloszenie/3',
-    },
-] %}
-
 <section class="list">
     <div class="list__container container">
-        {% for card in cards %}
+        {% for card in cards.data %}
             <div class="list__item">
-                {% include '@molecules/card.html.twig' with card %}
+                {% include '@molecules/card.html.twig' with {'card': card} %}
             </div>
         {% endfor %}
+
+        {% set path = 'announcement_index' %}
+        {% set pages = cards.pages %}
+        {% set currentPage = cards.page %}
     </div>
+    {% include "@molecules/pagination.html.twig" %}
+
 </section>

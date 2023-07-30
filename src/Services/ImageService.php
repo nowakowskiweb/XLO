@@ -21,9 +21,9 @@ class ImageService
         $image = new Image();
 
         $fileName = md5(uniqid(rand(), true));
-        $fileOriginalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $image->setName($fileName);
-        $image->setOriginalName($fileOriginalName);
+        $image->setOriginalName($originalFileName);
 
 
         $path = $this->params->get('images_directory') . $folder;

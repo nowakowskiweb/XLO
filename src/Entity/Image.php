@@ -19,6 +19,12 @@ class Image
     #[ORM\Column(length: 255)]
     private ?string $originalName = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $path = null;
+
+    #[ORM\ManyToOne(inversedBy: 'images')]
+    private ?Announcement $announcement = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -44,6 +50,44 @@ class Image
     public function setOriginalName(string $originalName): self
     {
         $this->originalName = $originalName;
+
+        return $this;
+    }
+
+    public function getPath(): ?string
+    {
+        return $this->path;
+    }
+
+    public function setPath(string $path): self
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function validateAssociations(): void
+    {
+        if ($this->announcement === null && $this->user === null) {
+            throw new \InvalidArgumentException('An Image must be associated with either an Announcement or a User.');
+        }
+
+        if ($this->announcement !== null && $this->user !== null) {
+            throw new \InvalidArgumentException('An Image cannot be associated with both an Announcement and a User.');
+        }
+    }
+
+    public function getAnnouncement(): ?Announcement
+    {
+        return $this->announcement;
+    }
+
+    public function setAnnouncement(?Announcement $announcement): self
+    {
+        $this->announcement = $announcement;
 
         return $this;
     }

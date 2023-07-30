@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\AnnouncementsRepository;
+use App\Repository\AnnouncementRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-#[ORM\Entity(repositoryClass: AnnouncementsRepository::class)]
+#[ORM\Entity(repositoryClass: AnnouncementRepository::class)]
 class Announcement
 {
     #[ORM\Id]
@@ -25,6 +25,9 @@ class Announcement
     #[ORM\Column]
     private ?float $price = null;
 
+    #[ORM\Column]
+    private bool $published = false;
+
     #[ORM\Column(length: 50)]
     private ?string $voivodeship = null;
 
@@ -34,27 +37,24 @@ class Announcement
     #[ORM\Column(length: 50)]
     private ?string $conditionType = null;
 
-    #[ORM\ManyToOne(inversedBy: 'announcements')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
-
     /**
      * @var Collection<int, Category>
      */
     #[ORM\JoinTable(name: 'announcements_categories')]
     #[ORM\JoinColumn(name: 'announcement_id', referencedColumnName: 'id')]
     #[ORM\InverseJoinColumn(name: 'category_id', referencedColumnName: 'id')]
-    #[ORM\ManyToMany(targetEntity: Category::class)]
+    #[ORM\ManyToMany(targetEntity: Category::class, fetch: "EAGER")]
     private Collection $categories;
 
     /**
      * @var Collection<int, Image>
      */
-    #[ORM\JoinTable(name: 'announcements_images')]
-    #[ORM\JoinColumn(name: 'announcement_id', referencedColumnName: 'id')]
-    #[ORM\InverseJoinColumn(name: 'image_id', referencedColumnName: 'id')]
-    #[ORM\ManyToMany(targetEntity: Image::class)]
+    #[ORM\OneToMany(mappedBy: 'announcement', targetEntity: Image::class, fetch: "EAGER")]
     private Collection $images;
+
+    #[ORM\ManyToOne(targetEntity: User::class, fetch: "EAGER", inversedBy: 'announcements')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     public function __construct()
     {
@@ -103,6 +103,18 @@ class Announcement
         return $this;
     }
 
+    public function isPublished(): ?bool
+    {
+        return $this->published;
+    }
+
+    public function setPublished(bool $published): self
+    {
+        $this->published = $published;
+
+        return $this;
+    }
+
     public function getVoivodeship(): ?string
     {
         return $this->voivodeship;
@@ -135,6 +147,76 @@ class Announcement
     public function setConditionType(string $conditionType): self
     {
         $this->conditionType = $conditionType;
+
+        return $this;
+    }
+
+    /**
+     * Dodaje kategorię do ogłoszenia.
+     *
+     * @param Category $category
+     * @return self
+     */
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Usuwa kategorię z ogłoszenia.
+     *
+     * @param Category $category
+     * @return self
+     */
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->contains($category)) {
+            $this->categories->removeElement($category);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Zwraca kolekcję kategorii przypisanych do ogłoszenia.
+     *
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @return Collection<int, Image>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
+            $image->setAnnouncement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getAnnouncement() === $this) {
+                $image->setAnnouncement(null);
+            }
+        }
 
         return $this;
     }

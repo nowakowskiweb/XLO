@@ -2,8 +2,9 @@
 
 namespace App\Repository;
 
-use App\Entity\Announcements;
+use App\Entity\Announcement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -38,6 +39,71 @@ class AnnouncementRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    /**
+     * @return Announcement[] Returns an array of Announcement objects
+     */
+    public function findPublished($value): array
+    {
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.images', 'i')
+            ->leftJoin('a.user', 'u')  // Add a join to load the user
+            ->leftJoin('a.categories', 'c')  // Add a join to load the categories
+            ->addSelect('i','u', 'c')  // Make sure to select images, user, and categories
+            ->andWhere('a.published = :published')
+            ->setParameter('published', $value)
+            ->orderBy('a.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function paginatorQuery($value)
+    {
+        return $this->createQueryBuilder('a')
+            ->leftJoin('a.images', 'i')
+            ->leftJoin('a.user', 'u')  // Add a join to load the user
+            ->leftJoin('a.categories', 'c')  // Add a join to load the categories
+            ->addSelect('i','u', 'c')  // Make sure to select images, user, and categories
+            ->andWhere('a.published = :published')
+            ->setParameter('published', $value)
+            ->orderBy('a.id', 'ASC')
+            ->getQuery();
+    }
+
+
+    public function findsAnnouncementsPaginated(int $page, int $limit = 10): array
+    {
+        $limit = abs($limit);
+
+        $result = [];
+
+        $query = $this->createQueryBuilder('a')
+            ->andWhere('a.published = :published')
+            ->setParameter('published', true)
+            ->orderBy('a.id', 'ASC')
+            ->setMaxResults($limit)
+            ->setFirstResult(($page * $limit) - $limit);
+
+        $paginator = new Paginator($query);
+        $data = $paginator->getQuery()->getResult();
+
+        //On vérifie qu'on a des données
+        if(empty($data)){
+            return $result;
+        }
+
+        //On calcule le nombre de pages
+        $pages = ceil($paginator->count() / $limit);
+
+        // On remplit le tableau
+        $result['data'] = $data;
+        $result['pages'] = $pages;
+        $result['page'] = $page;
+        $result['limit'] = $limit;
+
+        return $result;
+    }
+
 
 //    /**
 //     * @return Announcement[] Returns an array of Announcement objects

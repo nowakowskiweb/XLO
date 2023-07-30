@@ -42,9 +42,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\Column]
     private bool $emailAuthEnabled = false;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Announcement::class, orphanRemoval: true)]
-    private Collection $announcements;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $authCode;
 
@@ -53,6 +50,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?Image $avatar = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Announcement::class, orphanRemoval: true)]
+    private Collection $announcements;
 
     public function __construct()
     {
@@ -168,36 +168,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     }
 
     /**
-     * @return Collection<int, Announcements>
-     */
-    public function getAnnouncements(): Collection
-    {
-        return $this->announcements;
-    }
-
-    public function addAnnouncement(Announcements $announcement): self
-    {
-        if (!$this->announcements->contains($announcement)) {
-            $this->announcements->add($announcement);
-            $announcement->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAnnouncement(Announcements $announcement): self
-    {
-        if ($this->announcements->removeElement($announcement)) {
-            // set the owning side to null (unless already changed)
-            if ($announcement->getUser() === $this) {
-                $announcement->setUser(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * A visual identifier that represents this user.
      *
      * @see UserInterface
@@ -235,7 +205,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
          $this->plainPassword = null;
     }
 
-
     public function getAvatar(): ?Image
     {
         return $this->avatar;
@@ -244,6 +213,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     public function setAvatar(?Image $avatar): self
     {
         $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Announcement>
+     */
+    public function getAnnouncements(): Collection
+    {
+        return $this->announcements;
+    }
+
+    public function addAnnouncement(Announcement $announcement): self
+    {
+        if (!$this->announcements->contains($announcement)) {
+            $this->announcements->add($announcement);
+            $announcement->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnouncement(Announcement $announcement): self
+    {
+        if ($this->announcements->removeElement($announcement)) {
+            // set the owning side to null (unless already changed)
+            if ($announcement->getUser() === $this) {
+                $announcement->setUser(null);
+            }
+        }
 
         return $this;
     }
