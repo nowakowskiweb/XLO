@@ -1,16 +1,18 @@
-{% extends '../layouts/base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block stylesheets %}
     {{ encore_entry_link_tags('registration/style') }}
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     {{ encore_entry_script_tags('registration/script') }}
 {% endblock %}
 
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
-    {% include '../forms/registration.html.twig' %}
+
+    {% include '@sections/registration.html.twig' %}
+
 {% endblock %}

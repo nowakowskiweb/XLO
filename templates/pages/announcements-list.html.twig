@@ -13,6 +13,6 @@
 {% block title %}Hello AnnouncementController!{% endblock %}
 
 {% block body %}
-    {% include '@sections/filters.html.twig' %}
-    {% include '@sections/list.html.twig' with {'cards': announcements} %}
+    {% include '@sections/filters.html.twig' with {'filters': announcements.filters, 'page': announcements.page} %}
+    {% include '@sections/list.html.twig' with {'data': announcements} %}
 {% endblock %}

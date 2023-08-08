@@ -31,7 +31,7 @@ class AnnouncementFixtures extends Fixture implements DependentFixtureInterface
             $announcement->setPublished(true);
             $announcement->setVoivodeship($faker->city);
             $announcement->setCity($faker->city);
-            $announcement->setConditionType('new');
+            $announcement->setConditionType($faker->randomElement(['new','used','destroyed']));
 
             $randomUser = $faker->randomElement($users);
             $announcement->setUser($randomUser);

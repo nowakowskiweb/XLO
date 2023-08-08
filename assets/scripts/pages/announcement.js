@@ -8,19 +8,19 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error(error);
     }
     try {
-        new CustomSelector('#select-categories');
+        new CustomSelector('#categories');
     } catch (error) {
         console.error(error);
     }
     try {
-        new CustomSelector('#select-sorting',
+        new CustomSelector('#sorting',
             { plugins: [],}
         );
     } catch (error) {
         console.error(error);
     }
     try {
-        new CustomSelector('#select-conditions',
+        new CustomSelector('#conditionType',
             { plugins: [],}
         );
     } catch (error) {

@@ -1,14 +1,14 @@
 <section class="list">
     <div class="list__container container">
-        {% for card in cards.data %}
+        {% for item in data.items %}
             <div class="list__item">
-                {% include '@molecules/card.html.twig' with {'card': card} %}
+                {% include '@molecules/card.html.twig' with {'card': item} %}
             </div>
         {% endfor %}
 
         {% set path = 'announcement_index' %}
-        {% set pages = cards.pages %}
-        {% set currentPage = cards.page %}
+        {% set pages = data.pages %}
+        {% set currentPage = data.page %}
     </div>
     {% include "@molecules/pagination.html.twig" %}
 

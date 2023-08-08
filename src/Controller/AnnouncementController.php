@@ -20,25 +20,14 @@ class AnnouncementController extends BaseController
         $this->announcementRepository = $announcementRepository;
     }
 
-
     #[Route('/announcements', name: 'announcement_index')]
-    public function index(Request $request, PaginatorInterface $paginator): Response
+    public function index(Request $request): Response
     {
-//        $announcements = $this->announcementRepository->findPublished(true);
-//
-//        $pagination = $paginator->paginate(
-//            $this->announcementRepository->paginatorQuery(true),
-//            $request->query->get('page',1),
-//            10
-//        );
-
-        // Pass the data to the view
-//        return $this->render('@pages/announcements-list.html.twig', [
-//            'pagination' => $pagination,
-//        ]);
+        // Pobieramy dane z formularza
         $page = $request->query->getInt('page', 1);
 
-        $announcements = $this->announcementRepository->findsAnnouncementsPaginated($page, 10);
+        // Pobieramy paginowane ogłoszenia z uwzględnieniem filtrów
+        $announcements = $this->announcementRepository->findsAnnouncementsPaginated($page, 10, $request);
 
         return $this->render('@pages/announcements-list.html.twig', [
             'announcements' => $announcements,

@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Announcement;
+use App\Services\FilterService;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,9 +19,11 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class AnnouncementRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $filterService;
+    public function __construct(ManagerRegistry $registry,FilterService $filterService)
     {
         parent::__construct($registry, Announcement::class);
+        $this->filterService = $filterService;
     }
 
     public function save(Announcement $entity, bool $flush = false): void
@@ -40,55 +44,56 @@ class AnnouncementRepository extends ServiceEntityRepository
         }
     }
 
-    /**
-     * @return Announcement[] Returns an array of Announcement objects
-     */
-    public function findPublished($value): array
+    public function addPublishedAnnouncements(QueryBuilder $queryBuilder): QueryBuilder
     {
-        return $this->createQueryBuilder('a')
-            ->leftJoin('a.images', 'i')
-            ->leftJoin('a.user', 'u')  // Add a join to load the user
-            ->leftJoin('a.categories', 'c')  // Add a join to load the categories
-            ->addSelect('i','u', 'c')  // Make sure to select images, user, and categories
-            ->andWhere('a.published = :published')
-            ->setParameter('published', $value)
-            ->orderBy('a.id', 'ASC')
-            ->getQuery()
-            ->getResult();
+        return $queryBuilder->andWhere('a.published = :published')
+            ->setParameter('published', true);
     }
 
-    public function paginatorQuery($value)
-    {
-        return $this->createQueryBuilder('a')
-            ->leftJoin('a.images', 'i')
-            ->leftJoin('a.user', 'u')  // Add a join to load the user
-            ->leftJoin('a.categories', 'c')  // Add a join to load the categories
-            ->addSelect('i','u', 'c')  // Make sure to select images, user, and categories
-            ->andWhere('a.published = :published')
-            ->setParameter('published', $value)
-            ->orderBy('a.id', 'ASC')
-            ->getQuery();
-    }
-
-
-    public function findsAnnouncementsPaginated(int $page, int $limit = 10): array
+    public function findsAnnouncementsPaginated(int $page, int $limit = 10, $request): array
     {
         $limit = abs($limit);
 
-        $result = [];
+        $filters = [
+            'search' => $request->query->get('search'),
+            'minPrice' => $request->query->get('min-price'),
+            'maxPrice' => $request->query->get('max-price'),
+            'sorting' => $request->query->get('sorting'),
+            'conditionType' => $request->query->get('conditionType')
+        ];
+
+        $filters = array_filter($filters, function ($value) {
+            return !is_null($value) && $value !== '';
+        });
+
+
+        $result = [
+            'items' => null,
+            'pages' => null,
+            'page' => null,
+            'limit' => null,
+            'filters' => null,
+        ];
+
 
         $query = $this->createQueryBuilder('a')
-            ->andWhere('a.published = :published')
-            ->setParameter('published', true)
             ->orderBy('a.id', 'ASC')
             ->setMaxResults($limit)
             ->setFirstResult(($page * $limit) - $limit);
 
-        $paginator = new Paginator($query);
+        $queryBuilder = $this->addPublishedAnnouncements($query);
+
+        $queryBuilder = $this->filterService->applySentenceFilter($queryBuilder, $filters);
+        $queryBuilder = $this->filterService->applyMinPriceFilter($queryBuilder, $filters);
+        $queryBuilder = $this->filterService->applyMaxPriceFilter($queryBuilder, $filters);
+        $queryBuilder = $this->filterService->applyCategoriesFilter($queryBuilder, $filters);
+        $queryBuilder = $this->filterService->applyConditionsFilter($queryBuilder, $filters);
+
+        $paginator = new Paginator($queryBuilder);
         $data = $paginator->getQuery()->getResult();
 
         //On vérifie qu'on a des données
-        if(empty($data)){
+        if (empty($data)) {
             return $result;
         }
 
@@ -96,37 +101,12 @@ class AnnouncementRepository extends ServiceEntityRepository
         $pages = ceil($paginator->count() / $limit);
 
         // On remplit le tableau
-        $result['data'] = $data;
+        $result['items'] = $data;
         $result['pages'] = $pages;
         $result['page'] = $page;
         $result['limit'] = $limit;
+        $result['filters'] = $filters;
 
         return $result;
     }
-
-
-//    /**
-//     * @return Announcement[] Returns an array of Announcement objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Announcement
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
