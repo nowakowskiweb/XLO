@@ -43,6 +43,7 @@ class AnnouncementController extends BaseController
         ]);
     }
 
+
     #[Route('/announcements/{id}', methods: ['GET'], name: 'announcement_show')]
     public function show($id): Response
     {

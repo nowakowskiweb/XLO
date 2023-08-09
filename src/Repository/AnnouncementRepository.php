@@ -75,11 +75,12 @@ class AnnouncementRepository extends ServiceEntityRepository
             'filters' => null,
         ];
 
+        $pageLimit = max(1, $page);
 
         $query = $this->createQueryBuilder('a')
             ->orderBy('a.id', 'ASC')
             ->setMaxResults($limit)
-            ->setFirstResult(($page * $limit) - $limit);
+            ->setFirstResult(($pageLimit * $limit) - $limit);
 
         $queryBuilder = $this->addPublishedAnnouncements($query);
 
