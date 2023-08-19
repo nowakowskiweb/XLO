@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error(error);
     }
     try {
-        new CustomSelector('#categories');
+        new CustomSelector('#category');
     } catch (error) {
         console.error(error);
     }

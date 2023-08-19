@@ -16,7 +16,7 @@ class FilterService
 
     public function applyMinPriceFilter(QueryBuilder $queryBuilder, array $filters): QueryBuilder
     {
-        if (empty($filters) || !isset($filters['minPrice'])) return $queryBuilder;
+        if (empty($filters) || !isset($filters['min_price'])) return $queryBuilder;
 
         return $queryBuilder->andWhere('a.price >= :min')
             ->setParameter('min', $filters['min_price']);
@@ -24,10 +24,25 @@ class FilterService
 
     public function applyMaxPriceFilter(QueryBuilder $queryBuilder, array $filters): QueryBuilder
     {
-        if (empty($filters) || !isset($filters['maxPrice'])) return $queryBuilder;
+        if (empty($filters) || !isset($filters['max_price'])) return $queryBuilder;
 
         return $queryBuilder->andWhere('a.price <= :max')
             ->setParameter('max', $filters['max_price']);
+    }
+
+    public function applySortingFilter(QueryBuilder $queryBuilder, array $filters): QueryBuilder
+    {
+        if (empty($filters) || !isset($filters['sorting'])) return $queryBuilder;
+
+        switch ($filters['sorting']) {
+            case 'price_asc':
+                $queryBuilder->orderBy('a.price', 'ASC');
+                break;
+            case 'price_desc':
+                $queryBuilder->orderBy('a.price', 'DESC');
+                break;
+        }
+        return $queryBuilder;
     }
 
     public function applyCategoriesFilter(QueryBuilder $queryBuilder, array $filters): QueryBuilder
@@ -41,9 +56,11 @@ class FilterService
 
     public function applyConditionsFilter(QueryBuilder $queryBuilder, array $filters): QueryBuilder
     {
-        if (empty($filters) || !isset($filters['conditionType'])) return $queryBuilder;
+        if (empty($filters['condition_type'])) return $queryBuilder;
 
-        return $queryBuilder->andWhere('a.conditionType = :conditionType')
-            ->setParameter('conditionType', $filters['conditionType']);
+        $conditions = (array) $filters['condition_type'];  // Upewnij się, że to jest tablica
+
+        return $queryBuilder->andWhere('a.conditionType IN (:conditions)')
+            ->setParameter('conditions', $conditions);
     }
 }

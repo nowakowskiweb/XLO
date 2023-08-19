@@ -3,33 +3,39 @@
         <div class="announcements-filters__advanced-filters d-md-flex justify-content-around align-items-center flex-wrap">
             <form action="{{ path('announcement_index') }}" method="GET" enctype="multipart/form-data"
                   novalidate>
-                {% include '@atoms/searching.html.twig' %}
-
-                {% include '@atoms/input-number.twig' %}
-
+                {% include '@atoms/searching.html.twig' with {
+                    'search': filters['search'] ?? '',
+                } %}
+                {% include '@atoms/input-number.twig' with {
+                    'min_price': filters['min_price'] ?? '',
+                    'max_price': filters['max_price'] ?? '',
+                } %}
                 {% include '@atoms/select.html.twig' with {
                     'label': 'Sorting',
-                    'options': ['amazing', 'awesome', 'cool', 'excellent', 'great', 'neat', 'superb', 'wonderful'],
+                    'options': sorting,
                     'id': 'sorting',
                     'name': 'sorting',
                     'classes': 'sorting flex-grow-1',
+                    'default': filters['sorting'] is defined ? filters['sorting'] : { '': '' },
                 } %}
                 {% include '@atoms/select.html.twig' with {
                     'label': 'Conditions',
-                    'options': ['amazing', 'awesome', 'cool', 'excellent', 'great', 'neat', 'superb', 'wonderful'],
+                    'options': conditions,
                     'id': 'conditionType',
-                    'name': 'conditionType',
+                    'name': 'condition_type[]',
                     'classes': 'conditions flex-grow-1',
+                    'multiple': true,
+                    'default': filters['condition_type'] is defined ? filters['condition_type'] : { '': '' },
                 } %}
                 {% include '@atoms/select.html.twig' with {
                     'label': 'Categories',
-                    'options': ['amazing', 'awesome', 'cool', 'excellent', 'great', 'neat', 'superb', 'wonderful'],
-                    'id': 'categories',
-                    'name': 'categories',
+                    'options': categories,
+                    'id': 'category',
+                    'name': 'category',
                     'classes': 'categories flex-grow-1',
-                    'multiple': true
+                    'default': filters['category'] is defined ? filters['category'] : { '': '' },
                 } %}
-                <input type="hidden" name="page" value="{{ page }}"/>
+                <input type="hidden" name="page" value="1"/>
                 <button type="submit">SZUKAJ</button>
             </form>
         </div>

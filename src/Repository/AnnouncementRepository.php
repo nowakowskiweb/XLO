@@ -3,11 +3,15 @@
 namespace App\Repository;
 
 use App\Entity\Announcement;
+use App\Form\Type\CategoriesType;
+use App\Form\Type\ConditionType;
+use App\Form\Type\SortingType;
 use App\Services\FilterService;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @extends ServiceEntityRepository<Announcement>
@@ -50,30 +54,22 @@ class AnnouncementRepository extends ServiceEntityRepository
             ->setParameter('published', true);
     }
 
-    public function findsAnnouncementsPaginated(int $page, int $limit = 10, $request): array
+    public function findsAnnouncementsPaginated(int $page, int $limit = 10, Request $request): array
     {
         $limit = abs($limit);
 
         $filters = [
             'search' => $request->query->get('search'),
-            'minPrice' => $request->query->get('min-price'),
-            'maxPrice' => $request->query->get('max-price'),
+            'min_price' => $request->query->get('min_price'),
+            'max_price' => $request->query->get('max_price'),
             'sorting' => $request->query->get('sorting'),
-            'conditionType' => $request->query->get('conditionType')
+            'category' => $request->query->get('category'),
+            'condition_type' => $request->query->all('condition_type')
         ];
 
         $filters = array_filter($filters, function ($value) {
             return !is_null($value) && $value !== '';
         });
-
-
-        $result = [
-            'items' => null,
-            'pages' => null,
-            'page' => null,
-            'limit' => null,
-            'filters' => null,
-        ];
 
         $pageLimit = max(1, $page);
 
@@ -87,26 +83,35 @@ class AnnouncementRepository extends ServiceEntityRepository
         $queryBuilder = $this->filterService->applySentenceFilter($queryBuilder, $filters);
         $queryBuilder = $this->filterService->applyMinPriceFilter($queryBuilder, $filters);
         $queryBuilder = $this->filterService->applyMaxPriceFilter($queryBuilder, $filters);
+        $queryBuilder = $this->filterService->applySortingFilter($queryBuilder, $filters);
         $queryBuilder = $this->filterService->applyCategoriesFilter($queryBuilder, $filters);
         $queryBuilder = $this->filterService->applyConditionsFilter($queryBuilder, $filters);
 
         $paginator = new Paginator($queryBuilder);
         $data = $paginator->getQuery()->getResult();
 
-        //On vérifie qu'on a des données
+        if (isset($filters['condition_type'])) $filters['condition_type'] = ConditionType::mapConditions($filters['condition_type']);
+        if (isset($filters['sorting'])) $filters['sorting'] = SortingType::mapSorting([$filters['sorting']]);
+        if (isset($filters['category'])) $filters['category'] = CategoriesType::mapCategories([$filters['category']]);
+
+        $result = [
+            'items' => null,
+            'pages' => null,
+            'page' => null,
+            'limit' => null,
+            'filters' => $filters,
+        ];
+
         if (empty($data)) {
             return $result;
         }
 
-        //On calcule le nombre de pages
         $pages = ceil($paginator->count() / $limit);
 
-        // On remplit le tableau
         $result['items'] = $data;
         $result['pages'] = $pages;
         $result['page'] = $page;
         $result['limit'] = $limit;
-        $result['filters'] = $filters;
 
         return $result;
     }

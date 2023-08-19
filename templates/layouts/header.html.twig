@@ -21,7 +21,7 @@
                         <a class="navbar__link" href="{{ path('announcement_index') }}">Ogłoszenia</a>
                     </div>
                     <div class="navbar__link-item">
-                        <a class="navbar__link" href="#">Ulubione</a>
+                        <a class="navbar__link" href="{{ path('user_favorites') }}">Ulubione</a>
                     </div>
                     <div class="navbar__links-account">
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}

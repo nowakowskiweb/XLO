@@ -1,7 +1,12 @@
+{% set filteredOptions = options|filter((value, key) => key not in default|keys) %}
+
 <div class="select {{ classes|default('') }}">
     <select id="{{ id }}" name="{{ name }}" {% if multiple|default(false) %}multiple{% endif %}>
-        {% for option in options %}
-            <option>{{ option }}</option>
+        {% for value, name in default %}
+            <option value="{{ value }}" selected>{{ name }}</option>
+        {% endfor %}
+        {% for value, name in filteredOptions %}
+            <option value="{{ value }}">{{ name }}</option>
         {% endfor %}
     </select>
     <label for="{{ id }}" class="select__label">{{ label }}</label>

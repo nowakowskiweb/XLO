@@ -39,6 +39,23 @@ class CategoryRepository extends ServiceEntityRepository
         }
     }
 
+
+    public function findAllNames(): array
+    {
+        $results = $this->createQueryBuilder('c')
+            ->select('c.slug', 'c.name')
+            ->getQuery()
+            ->getResult();
+
+        $formattedResults = [];
+        foreach ($results as $result) {
+            $formattedResults[$result['slug']] = $result['name'];
+        }
+
+        return $formattedResults;
+
+    }
+
 //    /**
 //     * @return Category[] Returns an array of Categories objects
 //     */

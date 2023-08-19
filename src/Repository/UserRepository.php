@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Image;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -38,6 +39,48 @@ class UserRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function findsFavoriteAnnouncementsPaginated(int $page, int $limit = 10, $user): array
+    {
+        $limit = abs($limit);
+
+        $result = [
+            'items' => null,
+            'pages' => null,
+            'page' => null,
+            'limit' => null,
+        ];
+
+        $pageLimit = max(1, $page);
+
+        $queryBuilder = $this->createQueryBuilder('u')  // teraz 'u' reprezentuje użytkownika, bo jesteśmy w UserRepository
+        ->join('u.favoriteAnnouncements', 'a')  // 'favoriteAnnouncements' to właściwość w encji User
+        ->where('u = :user') // Tu filtrujemy dla konkretnego użytkownika
+        ->setParameter('user', $user)
+            ->orderBy('a.id', 'ASC') // Sortujesz po ogłoszeniach, więc 'a.id'
+            ->setMaxResults($limit)
+            ->setFirstResult(($pageLimit * $limit) - $limit);
+
+
+        $paginator = new Paginator($queryBuilder);
+        $data = $paginator->getQuery()->getResult();
+        dd($data);
+        //On vérifie qu'on a des données
+        if (empty($data)) {
+            return $result;
+        }
+
+        //On calcule le nombre de pages
+        $pages = ceil($paginator->count() / $limit);
+
+        // On remplit le tableau
+        $result['items'] = $data;
+        $result['pages'] = $pages;
+        $result['page'] = $page;
+        $result['limit'] = $limit;
+
+        return $result;
     }
 
 //    /**

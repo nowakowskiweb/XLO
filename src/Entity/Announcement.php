@@ -11,6 +11,12 @@ use Doctrine\Common\Collections\Collection;
 #[ORM\Entity(repositoryClass: AnnouncementRepository::class)]
 class Announcement
 {
+    const CONDITION = [
+        'new' => 'nowy',
+        'used' => 'używany',
+        'destroyed' => 'zniszczony',
+    ];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -23,7 +29,7 @@ class Announcement
     private ?string $description = null;
 
     #[ORM\Column]
-    private ?float $price = null;
+    private ?int $price = null;
 
     #[ORM\Column]
     private bool $published = false;
@@ -56,10 +62,14 @@ class Announcement
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'favoriteAnnouncements')]
+    private Collection $favoritedBy;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->favoritedBy = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -229,6 +239,33 @@ class Announcement
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getFavoritedBy(): Collection
+    {
+        return $this->favoritedBy;
+    }
+
+    public function addFavoritedBy(User $favoritedBy): self
+    {
+        if (!$this->favoritedBy->contains($favoritedBy)) {
+            $this->favoritedBy->add($favoritedBy);
+            $favoritedBy->addFavoriteAnnouncement($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoritedBy(User $favoritedBy): self
+    {
+        if ($this->favoritedBy->removeElement($favoritedBy)) {
+            $favoritedBy->removeFavoriteAnnouncement($this);
+        }
 
         return $this;
     }

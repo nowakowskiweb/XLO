@@ -54,9 +54,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Announcement::class, orphanRemoval: true)]
     private Collection $announcements;
 
+    #[ORM\ManyToMany(targetEntity: Announcement::class, inversedBy: 'favoritedBy')]
+    private Collection $favoriteAnnouncements;
+
     public function __construct()
     {
         $this->announcements = new ArrayCollection();
+        $this->favoriteAnnouncements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -243,6 +247,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
                 $announcement->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Announcement>
+     */
+    public function getFavoriteAnnouncements(): Collection
+    {
+        return $this->favoriteAnnouncements;
+    }
+
+    public function addFavoriteAnnouncement(Announcement $favoriteAnnouncement): self
+    {
+        if (!$this->favoriteAnnouncements->contains($favoriteAnnouncement)) {
+            $this->favoriteAnnouncements->add($favoriteAnnouncement);
+        }
+
+        return $this;
+    }
+
+    public function removeFavoriteAnnouncement(Announcement $favoriteAnnouncement): self
+    {
+        $this->favoriteAnnouncements->removeElement($favoriteAnnouncement);
 
         return $this;
     }

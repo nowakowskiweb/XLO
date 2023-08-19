@@ -32,6 +32,13 @@
     border: 1px solid #A18678;
   }
 
+  .ts-wrapper.has-items:not(.focus) ~ &__label {
+    top: -5px;
+    font-size: 10px;
+    border: 1px solid #A18678;
+    transition: none; // Wyłącza animację przy wczytywaniu
+  }
+
   .focus .ts-control {
     border-color: unset;
     box-shadow: unset;

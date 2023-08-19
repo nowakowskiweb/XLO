@@ -6,6 +6,8 @@ use App\Entity\Announcement;
 use App\Entity\Category;
 use App\Entity\Image;
 use App\Entity\User;
+use App\Form\Type\CategoriesType;
+use App\Form\Type\ConditionType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -16,27 +18,16 @@ class CategoryFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        $faker = Factory::create('pl_PL');
+        $categories = CategoriesType::getCategories();
 
-        for ($i = 0; $i < 30; $i++) {
-            $mainCategory = new Category();
-            $mainCategory->setName($faker->word);
-            $mainCategory->setDescription($faker->realText(50));
+        foreach ($categories as $category) {
+            $newCategory = new Category();
+            $newCategory->setName($category['name']);
+            $newCategory->setDescription($category['description']);
+            $newCategory->setSlug($category['slug']);
 
-            if ($faker->randomElement([true, false])) {
-                $subcategoriesCount = $faker->numberBetween(0, 5);
-                for ($j = 0; $j < $subcategoriesCount; $j++) {
-                    $subcategory = new Category();
-                    $subcategory->setName($faker->word);
-                    $subcategory->setDescription($faker->realText(50));
-                    $subcategory->setParent($mainCategory);
-                    $manager->persist($subcategory);
-                }
-            }
-
-            $manager->persist($mainCategory);
+            $manager->persist($newCategory);
         }
-
 
         $manager->flush();
     }
