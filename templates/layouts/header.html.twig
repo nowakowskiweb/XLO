@@ -20,13 +20,13 @@
                     <div class="navbar__link-item">
                         <a class="navbar__link" href="{{ path('announcement_index') }}">Ogłoszenia</a>
                     </div>
-                    <div class="navbar__link-item">
-                        <a class="navbar__link" href="{{ path('user_favorites') }}">Ulubione</a>
-                    </div>
+{#                    <div class="navbar__link-item">#}
+{#                        <a class="navbar__link" href="{{ path('user_favorites') }}">Ulubione</a>#}
+{#                    </div>#}
                     <div class="navbar__links-account">
                         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
                             <div class=" navbar__link-item">
-                                <a class="navbar__link navbar__link--user" href="{{ path('app_user') }}">Twoje konto</a>
+                                <a class="navbar__link navbar__link--user" href="{{ path('user_account') }}">Twoje konto</a>
                             </div>
                             <div class=" navbar__link-item">
                                 <a class="navbar__link navbar__link--logout" href="{{ path('app_logout') }}">Wyloguj</a>

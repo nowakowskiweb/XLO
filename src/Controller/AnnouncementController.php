@@ -55,12 +55,12 @@ class AnnouncementController extends BaseController
             }
         }
 
-        return $this->render('@pages/announcements-list.html.twig', [
+        return $this->render('@pages/announcements-index.html.twig', [
             'announcements' => $announcements,
             'categories' => $categories,
             'conditions' => $conditions,
             'sorting' => $sorting,
-            'test' => $output
+            'paginationFilters' => $output
         ]);
     }
 

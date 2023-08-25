@@ -47,11 +47,11 @@ class FilterService
 
     public function applyCategoriesFilter(QueryBuilder $queryBuilder, array $filters): QueryBuilder
     {
-        if (empty($filters) || !isset($filters['categories'])) return $queryBuilder;
+        if (empty($filters) || !isset($filters['category'])) return $queryBuilder;
 
-        return $queryBuilder->join('a.categories', 'c')
-            ->andWhere('c.id IN (:categories)')
-            ->setParameter('categories', $filters['categories']);
+        return $queryBuilder->join('a.category', 'c')
+            ->andWhere('c.slug = :category')
+            ->setParameter('category', $filters['category']);
     }
 
     public function applyConditionsFilter(QueryBuilder $queryBuilder, array $filters): QueryBuilder

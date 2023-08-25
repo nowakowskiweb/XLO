@@ -54,7 +54,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Announcement::class, orphanRemoval: true)]
     private Collection $announcements;
 
-    #[ORM\ManyToMany(targetEntity: Announcement::class, inversedBy: 'favoritedBy')]
+    #[ORM\ManyToMany(targetEntity: Announcement::class, inversedBy: 'favoritedBy', fetch: "EAGER")]
     private Collection $favoriteAnnouncements;
 
     public function __construct()

@@ -31,9 +31,13 @@ class Category
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
     private $categories;
 
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Announcement::class)]
+    private Collection $announcements;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->announcements = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,6 +118,36 @@ class Category
             // set the owning side to null (unless already changed)
             if ($category->getParent() === $this) {
                 $category->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Announcement>
+     */
+    public function getAnnouncements(): Collection
+    {
+        return $this->announcements;
+    }
+
+    public function addAnnouncement(Announcement $announcement): static
+    {
+        if (!$this->announcements->contains($announcement)) {
+            $this->announcements->add($announcement);
+            $announcement->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnnouncement(Announcement $announcement): static
+    {
+        if ($this->announcements->removeElement($announcement)) {
+            // set the owning side to null (unless already changed)
+            if ($announcement->getCategory() === $this) {
+                $announcement->setCategory(null);
             }
         }
 

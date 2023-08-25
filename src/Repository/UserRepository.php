@@ -54,28 +54,22 @@ class UserRepository extends ServiceEntityRepository
 
         $pageLimit = max(1, $page);
 
-        $queryBuilder = $this->createQueryBuilder('u')  // teraz 'u' reprezentuje użytkownika, bo jesteśmy w UserRepository
-        ->join('u.favoriteAnnouncements', 'a')  // 'favoriteAnnouncements' to właściwość w encji User
-        ->where('u = :user') // Tu filtrujemy dla konkretnego użytkownika
-        ->setParameter('user', $user)
-            ->orderBy('a.id', 'ASC') // Sortujesz po ogłoszeniach, więc 'a.id'
-            ->setMaxResults($limit)
-            ->setFirstResult(($pageLimit * $limit) - $limit);
+        // Pobierz wszystkie ulubione ogłoszenia jako tablicę
+        $allAnnouncements = $user->getFavoriteAnnouncements()->toArray();
 
-
-        $paginator = new Paginator($queryBuilder);
-        $data = $paginator->getQuery()->getResult();
-        dd($data);
-        //On vérifie qu'on a des données
-        if (empty($data)) {
+        if (empty($allAnnouncements)) {
             return $result;
         }
 
-        //On calcule le nombre de pages
-        $pages = ceil($paginator->count() / $limit);
+        // Oblicz całkowitą liczbę stron
+        $totalAnnouncements = count($allAnnouncements);
+        $pages = ceil($totalAnnouncements / $limit);
+
+        // Wybierz odpowiednią porcję ogłoszeń dla danej strony
+        $favoriteAnnouncements = array_slice($allAnnouncements, ($pageLimit - 1) * $limit, $limit);
 
         // On remplit le tableau
-        $result['items'] = $data;
+        $result['items'] = $favoriteAnnouncements;
         $result['pages'] = $pages;
         $result['page'] = $page;
         $result['limit'] = $limit;

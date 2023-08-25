@@ -44,15 +44,6 @@ class Announcement
     private ?string $conditionType = null;
 
     /**
-     * @var Collection<int, Category>
-     */
-    #[ORM\JoinTable(name: 'announcements_categories')]
-    #[ORM\JoinColumn(name: 'announcement_id', referencedColumnName: 'id')]
-    #[ORM\InverseJoinColumn(name: 'category_id', referencedColumnName: 'id')]
-    #[ORM\ManyToMany(targetEntity: Category::class, fetch: "EAGER")]
-    private Collection $categories;
-
-    /**
      * @var Collection<int, Image>
      */
     #[ORM\OneToMany(mappedBy: 'announcement', targetEntity: Image::class, fetch: "EAGER")]
@@ -65,9 +56,12 @@ class Announcement
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'favoriteAnnouncements')]
     private Collection $favoritedBy;
 
+    #[ORM\ManyToOne(inversedBy: 'announcements')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Category $category = null;
+
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
         $this->images = new ArrayCollection();
         $this->favoritedBy = new ArrayCollection();
     }
@@ -162,46 +156,6 @@ class Announcement
     }
 
     /**
-     * Dodaje kategorię do ogłoszenia.
-     *
-     * @param Category $category
-     * @return self
-     */
-    public function addCategory(Category $category): self
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories->add($category);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Usuwa kategorię z ogłoszenia.
-     *
-     * @param Category $category
-     * @return self
-     */
-    public function removeCategory(Category $category): self
-    {
-        if ($this->categories->contains($category)) {
-            $this->categories->removeElement($category);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Zwraca kolekcję kategorii przypisanych do ogłoszenia.
-     *
-     * @return Collection<int, Category>
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
-
-    /**
      * @return Collection<int, Image>
      */
     public function getImages(): Collection
@@ -266,6 +220,18 @@ class Announcement
         if ($this->favoritedBy->removeElement($favoritedBy)) {
             $favoritedBy->removeFavoriteAnnouncement($this);
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }

@@ -21,6 +21,6 @@
         'sorting': sorting } %}
     {% include '@sections/list.html.twig' with {
         'data': announcements,
-        'test': test,
+        'paginationFilters': paginationFilters,
     } %}
 {% endblock %}

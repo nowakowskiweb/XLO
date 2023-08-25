@@ -22,11 +22,11 @@ class UserController extends AbstractController
         $this->userRepository = $userRepository;
     }
 
-    #[Route('/user', name: 'app_user')]
+    #[Route('/user/account', name: 'user_account')]
     #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
-    public function index(): Response
+    public function accountEdit(): Response
     {
-        return $this->render('@pages/user.html.twig', [
+        return $this->render('@pages/user-account.html.twig', [
             'controller_name' => 'UserController',
         ]);
     }
@@ -34,7 +34,7 @@ class UserController extends AbstractController
 
     #[Route('/user/favorites', name: 'user_favorites')]
     #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
-    public function favorite(Request $request): Response
+    public function favoriteAnnouncements(Request $request): Response
     {
         $user = $this->getUser();
 
@@ -44,23 +44,39 @@ class UserController extends AbstractController
         // Pobieramy paginowane ogłoszenia z uwzględnieniem filtrów
         $announcements = $this->userRepository->findsFavoriteAnnouncementsPaginated($page, 10, $user);
 
-        return $this->render('@pages/announcements-favorite.html.twig', [
+        return $this->render('@pages/user-favorites.html.twig', [
             'announcements' => $announcements,
         ]);
     }
 
-    #[Route('/user/favorite', name: 'user_favorite_add')]
+    #[Route('/user/posted', name: 'user_posted')]
     #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
-    public function addFavorite(Request $request): Response
+    public function postedAnnouncements(Request $request): Response
     {
-        // Pobieramy dane z formularza
-        $page = $request->query->getInt('page', 1);
+        return $this->render('@pages/user-posted.html.twig');
+    }
 
-        // Pobieramy paginowane ogłoszenia z uwzględnieniem filtrów
-        $announcements = $this->announcementRepository->findsFavoriteAnnouncementsPaginated($page, 10, $request);
+    #[Route('/user/messages', name: 'user_messages')]
+    #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
+    public function messages(Request $request): Response
+    {
+        return $this->render('@pages/user-messages.html.twig');
 
-        return $this->render('@pages/announcements-favorite.html.twig', [
-            'announcements' => $announcements,
-        ]);
+    }
+
+    #[Route('/user/account/delete', name: 'user_delete')]
+    #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
+    public function accountDelete(Request $request): Response
+    {
+        return $this->render('@pages/user-delete.html.twig');
+
+    }
+
+    #[Route('/user/favorite/add', name: 'user_favorite_add')]
+    #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
+    public function favoriteAdd(Request $request): Response
+    {
+        return $this->render('@pages/user-favorite.html.twig');
+
     }
 }

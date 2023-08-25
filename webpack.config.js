@@ -24,7 +24,7 @@ Encore
     .addEntry('announcements-list/script', './assets/scripts/pages/announcement-list.js')
     .addEntry('announcements-favorite/script', './assets/scripts/pages/announcement-favorite.js')
     .addEntry('homepage/script', './assets/scripts/pages/homepage.js')
-    .addEntry('user/script', './assets/scripts/pages/user.js')
+    .addEntry('user-account/script', './assets/scripts/pages/user-account.js')
     .addEntry('registration/script', './assets/scripts/pages/registration.js')
     .addEntry('login/script', './assets/scripts/pages/login.js')
 
@@ -32,7 +32,7 @@ Encore
     .addStyleEntry('announcements-list/style', './assets/styles/pages/announcements-list.scss')
     .addStyleEntry('announcements-favorite/style', './assets/styles/pages/announcements-favorite.scss')
     .addStyleEntry('homepage/style', './assets/styles/pages/homepage.scss')
-    .addStyleEntry('user/style', './assets/styles/pages/user.scss')
+    .addStyleEntry('user-account/style', './assets/styles/pages/user-account.scss')
     .addStyleEntry('registration/style', './assets/styles/pages/registration.scss')
     .addStyleEntry('login/style', './assets/styles/pages/login.scss')
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.

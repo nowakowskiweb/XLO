@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ encore_entry_link_tags('announcements-favorite/style') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('announcements-favorite/script') }}
+{% endblock %}
+
+
+{% block title %}Hello AnnouncementController!{% endblock %}
+
+{% block body %}
+    {% include '@sections/list.html.twig' with {
+        'data': announcements,
+        'paginationFilters': [],
+    } %}
+{% endblock %}

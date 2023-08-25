@@ -38,12 +38,7 @@ class AnnouncementFixtures extends Fixture implements DependentFixtureInterface
             $randomUserFavorite = $faker->randomElement($users);
             $announcement->setUser($randomUser);
             $announcement->addFavoritedBy($randomUserFavorite);
-
-            $randomCategories = $faker->randomElements($categories, $faker->numberBetween(1, 3));
-
-            foreach ($randomCategories as $category) {
-                $announcement->addCategory($category);
-            }
+            $announcement->setCategory($faker->randomElement($categories));
 
             $manager->persist($announcement);
         }
