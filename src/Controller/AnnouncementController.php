@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\DataFixtures\CategoryFixtures;
+use App\Form\AddAnnouncementType;
 use App\Form\Type\CategoriesType;
 use App\Form\Type\ConditionType;
 use App\Form\Type\SortingType;
@@ -66,10 +67,22 @@ class AnnouncementController extends BaseController
 
     #[Route('/announcements/add', name: 'announcement_add')]
     #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
-    public function store(): Response
+    public function store(Request $request): Response
     {
-        return $this->render('@pages/announcement-show.html.twig', [
-            'controller_name' => 'AnnouncementController',
+        $form = $this->createForm(AddAnnouncementType::class, null, [
+            'user' => $this->getUser(),
+        ]);
+        $conditions = ConditionType::getConditions();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            return $this->redirectToRoute('app_homepage');
+        }
+
+        return $this->render('@pages/announcements-add.html.twig', [
+            'announcementForm' => $form->createView(),
         ]);
     }
 

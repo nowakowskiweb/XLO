@@ -13,8 +13,5 @@
 {% block title %}Hello AnnouncementController!{% endblock %}
 
 {% block body %}
-    {% include '@sections/list.html.twig' with {
-        'data': announcements,
-        'paginationFilters': [],
-    } %}
+    {% include '@sections/user-favorites.html.twig' %}
 {% endblock %}

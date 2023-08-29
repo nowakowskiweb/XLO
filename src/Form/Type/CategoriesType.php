@@ -69,7 +69,19 @@ class CategoriesType extends AbstractType
         ];
     }
 
-    public static function mapCategories(array $slugs): array
+    public static function getCategoriesAssociative(): array
+    {
+        $categories = self::getCategories();
+        $associativeArray = [];
+
+        foreach ($categories as $category) {
+            $associativeArray[$category['name']] = $category['slug'];
+        }
+
+        return $associativeArray;
+    }
+
+    public static function mapCategories(array $slugs = []): array
     {
         $filteredCategories = array_filter(self::getCategories(), function($category) use ($slugs) {
             return in_array($category['slug'], $slugs);

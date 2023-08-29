@@ -1,29 +1,26 @@
-<div class="">
-    <ul class="">
-        <li>
-            <a href="#" class="nav-link">
-                Twoje Dane
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link">
-                Wystawione Ogłoszenia
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link">
-                Ulubione ogłoszenia
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link">
-                Wiadomości
-            </a>
-        </li>
-        <li>
-            <a href="#" class="nav-link">
-                Usuń konto
-            </a>
-        </li>
-    </ul>
-</div>
+<aside class="">
+    <nav>
+        <ul class="">
+            <li>
+                <a href="{{ path('user_posted') }}" class="nav-link">
+                    Wystawione Ogłoszenia
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('user_favorites') }}" class="nav-link">
+                    Ulubione ogłoszenia
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('user_messages') }}" class="nav-link">
+                    Wiadomości
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('user_delete') }}" class="nav-link">
+                    Usuń konto
+                </a>
+            </li>
+        </ul>
+    </nav>
+</aside>

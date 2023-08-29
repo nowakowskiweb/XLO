@@ -1,0 +1,160 @@
+<form action="{{ path('announcement_add') }}" method="POST" enctype="multipart/form-data" class="needs-validation"
+      novalidate>
+    <div class="mb-3 form-group">
+        <label for="{{ announcementForm.title.vars.id }}"
+               class="form-label">{{ announcementForm.title.vars.label }}</label>
+        <input type="text" id="{{ announcementForm.title.vars.id }}"
+               name="{{ announcementForm.title.vars.full_name }}"
+               class="form-control {% if announcementForm.title.vars.errors is not empty %}is-invalid{% elseif announcementForm.title.vars.value is not empty %}is-valid{% endif %}"
+               value="{{ announcementForm.title.vars.value }}"/>
+        {% if announcementForm.title.vars.errors is not empty %}
+            {% include '@molecules/error.html.twig' with {'error': announcementForm.title.vars.errors} %}
+        {% endif %}
+        <div class="valid-feedback">
+            Jest git
+        </div>
+    </div>
+    <div class="mb-3 form-group">
+        <label for="{{ announcementForm.description.vars.id }}"
+               class="form-label">{{ announcementForm.description.vars.label }}</label>
+        <input type="text" id="{{ announcementForm.description.vars.id }}"
+               name="{{ announcementForm.description.vars.full_name }}"
+               class="form-control {% if announcementForm.description.vars.errors is not empty %}is-invalid{% elseif announcementForm.description.vars.value is not empty %}is-valid{% endif %}"
+               value="{{ announcementForm.description.vars.value }}"/>
+        {% if announcementForm.description.vars.errors is not empty %}
+            {% include '@molecules/error.html.twig' with {'error': announcementForm.description.vars.errors} %}
+        {% endif %}
+        <div class="valid-feedback">
+            Jest git
+        </div>
+    </div>
+    <div class="mb-3 form-group">
+        <label for="{{ announcementForm.price.vars.id }}"
+               class="form-label">{{ announcementForm.price.vars.label }}</label>
+        <input type="number" step="0.01" id="{{ announcementForm.price.vars.id }}"
+               name="{{ announcementForm.price.vars.full_name }}"
+               class="form-control {% if announcementForm.price.vars.errors is not empty %}is-invalid{% elseif announcementForm.price.vars.value is not empty %}is-valid{% endif %}"
+               value="{{ announcementForm.price.vars.value }}"/>
+        {% if announcementForm.price.vars.errors is not empty %}
+            {% include '@molecules/error.html.twig' with {'error': announcementForm.price.vars.errors} %}
+        {% endif %}
+        <div class="valid-feedback">
+            Jest git
+        </div>
+    </div>
+    <div class="mb-3 form-group">
+        <label for="{{ announcementForm.city.vars.id }}"
+               class="form-label">{{ announcementForm.city.vars.label }}</label>
+        <input type="text" id="{{ announcementForm.city.vars.id }}"
+               name="{{ announcementForm.city.vars.full_name }}"
+               class="form-control {% if announcementForm.city.vars.errors is not empty %}is-invalid{% elseif announcementForm.city.vars.value is not empty %}is-valid{% endif %}"
+               value="{{ announcementForm.city.vars.value }}"/>
+        {% if announcementForm.city.vars.errors is not empty %}
+            {% include '@molecules/error.html.twig' with {'error': announcementForm.city.vars.errors} %}
+        {% endif %}
+        <div class="valid-feedback">
+            Jest git
+        </div>
+    </div>
+    <div class="mb-3 form-group">
+        <label for="{{ announcementForm.conditionType.vars.id }}"
+               class="form-label">{{ announcementForm.conditionType.vars.label }}</label>
+        <select
+                id="{{ announcementForm.conditionType.vars.id }}"
+                name="{{ announcementForm.conditionType.vars.full_name }}"
+                class="form-control {% if announcementForm.conditionType.vars.errors is not empty %}is-invalid{% elseif announcementForm.conditionType.vars.value is not empty %}is-valid{% endif %}">
+            <option value="" {% if announcementForm.conditionType.vars.value is empty %}selected{% endif %}>Wybierz
+            </option>
+            {% for choice in announcementForm.conditionType.vars.choices %}
+                <option value="{{ choice.value }}"
+                        {% if choice.value == announcementForm.conditionType.vars.value %}selected{% endif %}
+                >{{ choice.label }}</option>
+            {% endfor %}
+        </select>
+
+        {% if announcementForm.conditionType.vars.errors is not empty %}
+            <div class="invalid-feedback">
+                {% for error in announcementForm.conditionType.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="valid-feedback">
+            Jest git
+        </div>
+    </div>
+
+    <div class="mb-3 form-group">
+        <label for="{{ announcementForm.voivodeship.vars.id }}"
+               class="form-label">{{ announcementForm.voivodeship.vars.label }}</label>
+        <select
+                id="{{ announcementForm.voivodeship.vars.id }}"
+                name="{{ announcementForm.voivodeship.vars.full_name }}"
+                class="form-control {% if announcementForm.voivodeship.vars.errors is not empty %}is-invalid{% elseif announcementForm.voivodeship.vars.value is not empty %}is-valid{% endif %}">
+            <option value="" {% if announcementForm.voivodeship.vars.value is empty %}selected{% endif %}>Wybierz
+            </option>
+            {% for choice in announcementForm.voivodeship.vars.choices %}
+                <option value="{{ choice.data }}"
+
+                        {% if choice.value == announcementForm.voivodeship.vars.value %}selected{% endif %}
+                >{{ choice.label }}</option>
+            {% endfor %}
+        </select>
+
+        {% if announcementForm.voivodeship.vars.errors is not empty %}
+            <div class="invalid-feedback">
+                {% for error in announcementForm.voivodeship.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="valid-feedback">
+            Jest git
+        </div>
+    </div>
+    <div class="mb-3 form-group">
+        <label for="{{ announcementForm.category.vars.id }}"
+               class="form-label">{{ announcementForm.category.vars.label }}</label>
+        <select
+                id="{{ announcementForm.category.vars.id }}"
+                name="{{ announcementForm.category.vars.full_name }}"
+                class="form-control {% if announcementForm.category.vars.errors is not empty %}is-invalid{% elseif announcementForm.category.vars.value is not empty %}is-valid{% endif %}">
+            <option value="" {% if announcementForm.category.vars.value is empty %}selected{% endif %}>Wybierz
+            </option>
+            {% for choice in announcementForm.category.vars.choices %}
+                <option value="{{ choice.value }}"
+                        {% if choice.value == announcementForm.category.vars.value %}selected{% endif %}
+                >{{ choice.label }}</option>
+            {% endfor %}
+        </select>
+
+        {% if announcementForm.category.vars.errors is not empty %}
+            <div class="invalid-feedback">
+                {% for error in announcementForm.category.vars.errors %}
+                    {{ error.message }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="valid-feedback">
+            Jest git
+        </div>
+    </div>
+    <div class="mb-3 form-group">
+        <label class="form-label">Dodaj obrazy</label>
+
+        <div>
+            {% for i in 1..5 %}
+                <div class="mb-2">
+                    <input type="file"
+                           id="add_announcement_images_{{ i }}"
+                            name="add_announcement[images][{{ i }}][file]"
+                           class="form-control"
+                           accept="image/*">
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {{ form_row(announcementForm._token) }}
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

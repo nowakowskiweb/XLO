@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    {{ encore_entry_link_tags('user-account/style') }}
+    {{ encore_entry_link_tags('announcements-list/style') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('user-account/script') }}
+    {{ encore_entry_script_tags('announcements-list/script') }}
 {% endblock %}
 
 
 {% block title %}Hello AnnouncementController!{% endblock %}
 
 {% block body %}
-    {% include '@sections/user-posted.html.twig' %}
+    {% include '@forms/announcements-add.html.twig' %}
 {% endblock %}

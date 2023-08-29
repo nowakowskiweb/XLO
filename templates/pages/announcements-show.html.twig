@@ -13,14 +13,5 @@
 {% block title %}Hello AnnouncementController!{% endblock %}
 
 {% block body %}
-    {% include '@sections/filters.html.twig' with {
-        'filters': announcements.filters,
-        'page': announcements.page,
-        'categories': categories,
-        'conditions': conditions,
-        'sorting': sorting } %}
-    {% include '@sections/list.html.twig' with {
-        'data': announcements,
-        'paginationFilters': paginationFilters,
-    } %}
+<h1>SHOW</h1>
 {% endblock %}

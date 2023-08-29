@@ -25,6 +25,22 @@ class Image
     #[ORM\ManyToOne(inversedBy: 'images')]
     private ?Announcement $announcement = null;
 
+    /**
+     * @var UploadedFile|null
+     */
+    private $file;
+
+    public function getFile(): ?UploadedFile
+    {
+        return $this->file;
+    }
+
+    public function setFile(?UploadedFile $file): self
+    {
+        $this->file = $file;
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
