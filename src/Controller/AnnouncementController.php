@@ -2,14 +2,13 @@
 
 namespace App\Controller;
 
-use App\DataFixtures\CategoryFixtures;
+use App\Entity\Announcement;
 use App\Form\AddAnnouncementType;
-use App\Form\Type\CategoriesType;
 use App\Form\Type\ConditionType;
 use App\Form\Type\SortingType;
 use App\Repository\AnnouncementRepository;
 use App\Repository\CategoryRepository;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Services\ImageService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Doctrine\ORM\EntityManagerInterface;
@@ -67,16 +66,36 @@ class AnnouncementController extends BaseController
 
     #[Route('/announcements/add', name: 'announcement_add')]
     #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
-    public function store(Request $request): Response
+    public function store(Request $request, EntityManagerInterface $entityManager, ImageService $imageService): Response
     {
         $form = $this->createForm(AddAnnouncementType::class, null, [
             'user' => $this->getUser(),
         ]);
-        $conditions = ConditionType::getConditions();
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $announcement = new Announcement();
+
+            $announcement->setTitle($form->get('title')->getData());
+            $announcement->setDescription($form->get('description')->getData());
+            $announcement->setPrice($form->get('price')->getData());
+            $announcement->setVoivodeship($form->get('voivodeship')->getData());
+            $announcement->setCity($form->get('city')->getData());
+            $announcement->setConditionType($form->get('conditionType')->getData());
+            $announcement->setCategory($form->get('category')->getData());
+            $announcement->setUser($this->getUser());
+
+            $images = $form->get('images')->getData();
+            foreach ($images as $imageEntity) {
+                $uploadedFile = $imageEntity->getFile();
+                if ($uploadedFile) {
+                    $image = $imageService->add($uploadedFile, 'announcements');
+                    $announcement->addImage($image);
+                }
+            }
+
+            $entityManager->persist($announcement);
+            $entityManager->flush();
 
             return $this->redirectToRoute('app_homepage');
         }

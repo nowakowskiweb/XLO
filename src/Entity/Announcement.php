@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AnnouncementRepository::class)]
 class Announcement
@@ -46,7 +47,8 @@ class Announcement
     /**
      * @var Collection<int, Image>
      */
-    #[ORM\OneToMany(mappedBy: 'announcement', targetEntity: Image::class, fetch: "EAGER")]
+    #[ORM\OneToMany(mappedBy: 'announcement', targetEntity: Image::class, fetch: "EAGER", cascade: ["persist", "remove"])]
+    #[Assert\Valid]
     private Collection $images;
 
     #[ORM\ManyToOne(targetEntity: User::class, fetch: "EAGER", inversedBy: 'announcements')]

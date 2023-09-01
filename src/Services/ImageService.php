@@ -22,11 +22,13 @@ class ImageService
 
         $fileName = md5(uniqid(rand(), true));
         $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        $path = $this->params->get('images_directory') . $folder;
+
         $image->setName($fileName);
         $image->setOriginalName($originalFileName);
+        $image->setPath($path);
 
 
-        $path = $this->params->get('images_directory') . $folder;
         $file->move($path . '/', $fileName . $this->getExtensionFromMime($file->getMimeType()));
 
         return $image;
@@ -50,15 +52,11 @@ class ImageService
 
     private function getExtensionFromMime(string $mime): string
     {
-        switch ($mime) {
-            case 'image/png':
-                return '.png';
-            case 'image/jpeg':
-                return '.jpg';
-            case 'image/webp':
-                return '.webp';
-            default:
-                throw new Exception('Nieobsługiwany format obrazu: ' . $mime);
-        }
+        return match ($mime) {
+            'image/png' => '.png',
+            'image/jpeg' => '.jpg',
+            'image/webp' => '.webp',
+            default => throw new Exception('Nieobsługiwany format obrazu: ' . $mime),
+        };
     }
 }

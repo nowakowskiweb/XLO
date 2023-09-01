@@ -4,18 +4,17 @@ namespace App\Entity;
 
 use App\Repository\ImageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ImageRepository::class)]
 class Image
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\Id, ORM\GeneratedValue, ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
-
     #[ORM\Column(length: 255)]
     private ?string $originalName = null;
 
@@ -25,10 +24,13 @@ class Image
     #[ORM\ManyToOne(inversedBy: 'images')]
     private ?Announcement $announcement = null;
 
+    #[ORM\Column]
+    private bool $isMain = false;
+
     /**
      * @var UploadedFile|null
      */
-    private $file;
+    private $file = null;
 
     public function getFile(): ?UploadedFile
     {
@@ -104,6 +106,18 @@ class Image
     public function setAnnouncement(?Announcement $announcement): self
     {
         $this->announcement = $announcement;
+
+        return $this;
+    }
+
+    public function isIsMain(): ?bool
+    {
+        return $this->isMain;
+    }
+
+    public function setIsMain(bool $isMain): static
+    {
+        $this->isMain = $isMain;
 
         return $this;
     }

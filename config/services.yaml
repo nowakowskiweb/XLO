@@ -4,8 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    images_directory: '/public/assets/uploads/images/'
-    images_fixture_directory: '/public/assets/uploads/images/fixtures/'
+    images_directory: 'uploads/images/'
+    images_fixture_directory: 'uploads/images/fixtures/'
 services:
     # default configuration for helpers in *this* file
     _defaults:

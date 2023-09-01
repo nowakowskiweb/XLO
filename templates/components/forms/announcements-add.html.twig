@@ -141,17 +141,33 @@
     </div>
     <div class="mb-3 form-group">
         <label class="form-label">Dodaj obrazy</label>
+        {% for i in 0..4 %}
+            <div class="mb-2">
+                <input type="file"
+                       id="add_announcement_images_{{ i }}"
+                       name="add_announcement[images][{{ i }}][file]"
+                       class="form-control">
 
-        <div>
-            {% for i in 1..5 %}
-                <div class="mb-2">
-                    <input type="file"
-                           id="add_announcement_images_{{ i }}"
-                            name="add_announcement[images][{{ i }}][file]"
-                           class="form-control"
-                           accept="image/*">
-                </div>
-            {% endfor %}
+
+                {% if announcementForm.images[i].file.vars.errors is defined and announcementForm.images[i].file.vars.errors is not empty %}
+                    <div class="invalid-feedback d-block">
+                        {% for error in announcementForm.images[i].file.vars.errors %}
+                            {{ error.message }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+{#        {% if announcementForm.add_announcement_main_image.vars.errors is defined and announcementForm.add_announcement_main_image.vars.errors is not empty %}#}
+{#            <div class="invalid-feedback d-block">#}
+{#                {% for error in announcementForm.add_announcement_main_image.vars.errors %}#}
+{#                    {{ error.message }}#}
+{#                {% endfor %}#}
+{#            </div>#}
+{#        {% endif %}#}
+        <div class="valid-feedback">
+            Jest git
         </div>
     </div>
     {{ form_row(announcementForm._token) }}

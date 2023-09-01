@@ -6,7 +6,7 @@
                 {% include '@atoms/searching.html.twig' with {
                     'search': filters['search'] ?? '',
                 } %}
-                {% include '@atoms/input-number.twig' with {
+                {% include '@atoms/input-number.html.twig' with {
                     'min_price': filters['min_price'] ?? '',
                     'max_price': filters['max_price'] ?? '',
                 } %}
