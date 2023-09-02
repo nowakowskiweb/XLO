@@ -84,8 +84,8 @@ class AnnouncementController extends BaseController
             $announcement->setConditionType($form->get('conditionType')->getData());
             $announcement->setCategory($form->get('category')->getData());
             $announcement->setUser($this->getUser());
-
             $images = $form->get('images')->getData();
+
             foreach ($images as $imageEntity) {
                 $uploadedFile = $imageEntity->getFile();
                 if ($uploadedFile) {

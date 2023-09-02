@@ -132,12 +132,34 @@ class AddAnnouncementType extends AbstractType
                 'allow_delete' => true,
                 'constraints' => [
                     new Assert\Callback(function ($images, ExecutionContextInterface $context) {
-                        $nonEmptyImages = array_filter($images, function ($image) {
-                            return null !== $image->getFile();
-                        });
-                        if (count($nonEmptyImages) === 0) {
+                        $mainImagesCount = 0;
+                        $hasImages = false;
+
+                        foreach ($images as $index => $image) {
+                            if ($image->getFile() !== null) {
+                                $hasImages = true;
+                            }
+
+                            if ($image->isMain()) {
+                                $mainImagesCount++;
+
+                                // Sprawdzenie, czy obraz dla zaznaczonego głównego obrazu istnieje
+                                if ($image->getFile() === null) {
+                                    $context->buildViolation('Zaznaczony główny obraz jest pusty.')
+                                        ->atPath('[' . $index . '].file.vars.errors')
+                                        ->addViolation();
+                                }
+                            }
+                        }
+
+                        if (!$hasImages) {
                             $context->buildViolation('Proszę przesłać co najmniej jeden obraz.')
                                 ->atPath('[0].file.vars.errors')
+                                ->addViolation();
+                        }
+
+                        if ($mainImagesCount !== 1) {
+                            $context->buildViolation('Wybierz jeden główny obraz.')
                                 ->addViolation();
                         }
                     }),

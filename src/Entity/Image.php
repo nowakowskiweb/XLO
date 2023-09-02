@@ -25,7 +25,7 @@ class Image
     private ?Announcement $announcement = null;
 
     #[ORM\Column]
-    private bool $isMain = false;
+    private bool $main = false;
 
     /**
      * @var UploadedFile|null
@@ -110,14 +110,14 @@ class Image
         return $this;
     }
 
-    public function isIsMain(): ?bool
+    public function isMain(): bool
     {
-        return $this->isMain;
+        return $this->main;
     }
 
-    public function setIsMain(bool $isMain): static
+    public function setMain(bool $main): static
     {
-        $this->isMain = $isMain;
+        $this->main = $main;
 
         return $this;
     }

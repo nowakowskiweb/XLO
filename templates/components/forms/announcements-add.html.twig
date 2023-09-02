@@ -148,6 +148,13 @@
                        name="add_announcement[images][{{ i }}][file]"
                        class="form-control">
 
+                {% include '@atoms/input-radio.html.twig' with {
+                    'name': 'add_announcement[images][' ~ i ~ '][main]',
+                    'id': 'add_announcement_images_' ~ i ~ '_main',
+                    'value': i,
+                    'checked': i == 0,
+                    'label': announcementForm.images.vars.prototype.main.vars.label
+                } %}
 
                 {% if announcementForm.images[i].file.vars.errors is defined and announcementForm.images[i].file.vars.errors is not empty %}
                     <div class="invalid-feedback d-block">
@@ -158,14 +165,6 @@
                 {% endif %}
             </div>
         {% endfor %}
-
-{#        {% if announcementForm.add_announcement_main_image.vars.errors is defined and announcementForm.add_announcement_main_image.vars.errors is not empty %}#}
-{#            <div class="invalid-feedback d-block">#}
-{#                {% for error in announcementForm.add_announcement_main_image.vars.errors %}#}
-{#                    {{ error.message }}#}
-{#                {% endfor %}#}
-{#            </div>#}
-{#        {% endif %}#}
         <div class="valid-feedback">
             Jest git
         </div>

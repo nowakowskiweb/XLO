@@ -31,10 +31,10 @@ class ImageType extends AbstractType
                 ]),
             ],
         ])
-        ->add('isMain', RadioType::class, [
+        ->add('main', CheckboxType::class, [
             'label' => 'Główny obraz',
             'required' => false,
-            'mapped' => false // ważne! nie mapujemy bezpośrednio do encji
+            'mapped' => true
         ]);
     }
 

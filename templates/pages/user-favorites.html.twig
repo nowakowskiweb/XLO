@@ -13,5 +13,17 @@
 {% block title %}Hello AnnouncementController!{% endblock %}
 
 {% block body %}
-    {% include '@sections/user-favorites.html.twig' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-2">
+                {% include '@molecules/sidebar-menu.html.twig' %}
+            </div>
+            <div class="col-10">
+                {% include '@sections/list.html.twig' with {
+                    'data': announcements,
+                    'paginationFilters': [],
+                } %}
+            </div>
+        </div>
+    </div>
 {% endblock %}

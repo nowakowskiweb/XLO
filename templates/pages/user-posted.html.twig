@@ -13,5 +13,23 @@
 {% block title %}Hello AnnouncementController!{% endblock %}
 
 {% block body %}
-    {% include '@sections/user-posted.html.twig' %}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-3">
+                    {% include '@molecules/sidebar-menu.html.twig' %}
+                </div>
+                <div class="col-12 col-md-3">
+                    <div class="col-12">
+                        <a href="{{ path('announcement_add') }}" class="">
+                            Dodaj ogłoszenie
+                        </a>
+                    </div>
+                    <div class="col-12">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

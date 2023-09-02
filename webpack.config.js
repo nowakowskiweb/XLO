@@ -21,6 +21,7 @@ Encore
      * and one CSS file (e.g. app.scss) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/scripts/app.js')
+    .addEntry('announcements-add/script', './assets/scripts/pages/announcement-add.js')
     .addEntry('announcements-list/script', './assets/scripts/pages/announcement-list.js')
     .addEntry('announcements-favorite/script', './assets/scripts/pages/announcement-favorite.js')
     .addEntry('homepage/script', './assets/scripts/pages/homepage.js')
@@ -29,6 +30,7 @@ Encore
     .addEntry('login/script', './assets/scripts/pages/login.js')
 
 
+    .addStyleEntry('announcements-add/style', './assets/styles/pages/announcements-add.scss')
     .addStyleEntry('announcements-list/style', './assets/styles/pages/announcements-list.scss')
     .addStyleEntry('announcements-favorite/style', './assets/styles/pages/announcements-favorite.scss')
     .addStyleEntry('homepage/style', './assets/styles/pages/homepage.scss')
