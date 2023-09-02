@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\AnnouncementRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -15,11 +16,15 @@ class UserController extends AbstractController
 {
     private $entityManager;
     private $userRepository;
+    private $announcementRepository;
 
-    public function __construct(EntityManagerInterface $entityManager,UserRepository $userRepository)
+
+    public function __construct(EntityManagerInterface $entityManager,UserRepository $userRepository, AnnouncementRepository $announcementRepository)
     {
         $this->entityManager = $entityManager;
         $this->userRepository = $userRepository;
+        $this->announcementRepository = $announcementRepository;
+
     }
 
     #[Route('/user/account', name: 'user_account')]
@@ -38,7 +43,6 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
 
-        // Pobieramy dane z formularza
         $page = $request->query->getInt('page', 1);
 
         // Pobieramy paginowane ogłoszenia z uwzględnieniem filtrów
@@ -53,7 +57,14 @@ class UserController extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
     public function postedAnnouncements(Request $request): Response
     {
-        return $this->render('@pages/user-posted.html.twig');
+        $user = $this->getUser();
+        $page = $request->query->getInt('page', 1);
+
+        $announcements = $this->announcementRepository->findsPostedAnnouncementsPaginated($page, 10, $user);
+
+        return $this->render('@pages/user-posted.html.twig',[
+            'announcements' => $announcements,
+        ]);
     }
 
     #[Route('/user/messages', name: 'user_messages')]
@@ -64,7 +75,7 @@ class UserController extends AbstractController
 
     }
 
-    #[Route('/user/account/delete', name: 'user_delete')]
+    #[Route('/user/delete', name: 'user_delete')]
     #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
     public function accountDelete(Request $request): Response
     {

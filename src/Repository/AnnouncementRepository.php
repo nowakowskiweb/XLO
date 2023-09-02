@@ -115,4 +115,42 @@ class AnnouncementRepository extends ServiceEntityRepository
 
         return $result;
     }
+
+    public function findsPostedAnnouncementsPaginated(int $page, int $limit = 10, $user): array
+    {
+        $limit = abs($limit);
+
+        $result = [
+            'items' => null,
+            'pages' => null,
+            'page' => null,
+            'limit' => null,
+        ];
+
+        $pageLimit = max(1, $page);
+
+        $queryBuilder = $this->createQueryBuilder('a')
+            ->where('a.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('a.id', 'ASC')
+            ->setMaxResults($limit)
+            ->setFirstResult(($pageLimit * $limit) - $limit);
+
+        $paginator = new Paginator($queryBuilder);
+        $postedAnnouncements = $paginator->getQuery()->getResult();
+
+        if (empty($postedAnnouncements)) {
+            return $result;
+        }
+
+        $pages = ceil($paginator->count() / $limit);
+
+        $result['items'] = $postedAnnouncements;
+        $result['pages'] = $pages;
+        $result['page'] = $page;
+        $result['limit'] = $limit;
+
+        return $result;
+    }
+
 }

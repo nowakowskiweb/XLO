@@ -18,9 +18,12 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class UserRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $announcementRepository;
+
+    public function __construct(ManagerRegistry $registry, AnnouncementRepository $announcementRepository)
     {
         parent::__construct($registry, User::class);
+        $this->announcementRepository = $announcementRepository;
     }
 
     public function save(User $entity, bool $flush = false): void
