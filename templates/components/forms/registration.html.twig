@@ -1,33 +1,5 @@
 <form action="{{ path('app_register') }}" method="POST" enctype="multipart/form-data" class="needs-validation"
       novalidate>
-    <div class="mb-3 form-group">
-        <label for="{{ registrationForm.firstName.vars.id }}"
-               class="form-label">{{ registrationForm.firstName.vars.label }}</label>
-        <input type="text" id="{{ registrationForm.firstName.vars.id }}"
-               name="{{ registrationForm.firstName.vars.full_name }}"
-               class="form-control {% if registrationForm.firstName.vars.errors is not empty %}is-invalid{% elseif registrationForm.firstName.vars.value is not empty %}is-valid{% endif %}"
-               value="{{ registrationForm.firstName.vars.value }}"/>
-        {% if registrationForm.firstName.vars.errors is not empty %}
-            {% include '@molecules/error.html.twig' with {'error': registrationForm.firstName.vars.errors} %}
-        {% endif %}
-        <div class="valid-feedback">
-            Jest git
-        </div>
-    </div>
-    <div class="mb-3 form-group">
-        <label for="{{ registrationForm.lastName.vars.id }}"
-               class="form-label">{{ registrationForm.lastName.vars.label }}</label>
-        <input type="text" id="{{ registrationForm.lastName.vars.id }}"
-               name="{{ registrationForm.lastName.vars.full_name }}"
-               class="form-control {% if registrationForm.lastName.vars.errors is not empty %}is-invalid{% elseif registrationForm.lastName.vars.value is not empty %}is-valid{% endif %}"
-               value="{{ registrationForm.lastName.vars.value }}"/>
-        {% if registrationForm.lastName.vars.errors is not empty %}
-            {% include '@molecules/error.html.twig' with {'error': registrationForm.lastName.vars.errors} %}
-        {% endif %}
-        <div class="valid-feedback">
-            Jest git
-        </div>
-    </div>
     <div class="mb-3">
         <label for="{{ registrationForm.login.vars.id }}"
                class="form-label">{{ registrationForm.login.vars.label }}</label>

@@ -30,12 +30,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    #[ORM\Column(length: 50, nullable: true)]
-    private ?string $firstName = null;
-
-    #[ORM\Column(length: 70, nullable: true)]
-    private ?string $lastName = null;
-
     #[ORM\Column]
     private bool $verified = false;
 

@@ -19,7 +19,11 @@
                 <div class="col-12 col-md-3">
                     {% include '@molecules/sidebar-menu.html.twig' %}
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-md-9">
+                    <div class="col-12">
+                        {% include '@molecules/user-links.html.twig' %}
+                    </div>
+                    {% include '@forms/user-edit.html.twig' %}
                 </div>
             </div>
         </div>

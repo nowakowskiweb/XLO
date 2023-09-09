@@ -26,7 +26,6 @@ class UserFixtures extends Fixture
         $admin = new User();
         $admin->setEmail('admin@gmail.com');
         $admin->setLogin('admin');
-        $admin->setFirstName('Łukasz');
         $admin->setVerified(true);
         $admin->setRoles(['ROLE_ADMIN']);
         $hashedPassword = $this->passwordHasher->hashPassword($admin, 'admin');
@@ -38,8 +37,6 @@ class UserFixtures extends Fixture
 
             $user->setEmail($faker->unique()->email); // Generate a unique email for each user
             $user->setLogin($faker->firstName . $i);
-            $user->setFirstName($faker->firstName);
-            $user->setLastName($faker->lastName);
             $user->setVerified(false);
             $user->setRoles(['ROLE_USER']);
 

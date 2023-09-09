@@ -1,0 +1,33 @@
+<form action="{{ path('user_edit') }}" method="POST" enctype="multipart/form-data" class="needs-validation"
+      novalidate>
+    <div class="mb-3">
+        <label for="{{ userEditForm.login.vars.id }}"
+               class="form-label">{{ userEditForm.login.vars.label }}</label>
+        <input type="text" id="{{ userEditForm.login.vars.id }}" name="{{ userEditForm.login.vars.full_name }}"
+               class="form-control {% if userEditForm.login.vars.errors is not empty %}is-invalid{% elseif userEditForm.login.vars.errors is empty and userEditForm.login.vars.value is not empty and isSubmitted %}is-valid{% endif %}"
+               value="{{ userEditForm.login.vars.value }}" required/>
+        {% if userEditForm.login.vars.errors is not empty %}
+            {% include '@molecules/error.html.twig' with {'error': userEditForm.login.vars.errors} %}
+        {% endif %}
+        {% if isSubmitted %}
+            <div class="valid-feedback">
+                Jest git
+            </div>
+        {% endif %}
+    </div>
+    <img src="{{ asset(user.avatar.path ~ '/' ~ user.avatar.name) }}" alt="Avatar użytkownika">
+
+    <div class="mb-3 form-group">
+        <label for="{{ userEditForm.avatar.vars.id }}"
+               class="form-label">{{ userEditForm.avatar.vars.label }}</label>
+        <input type="file" id="{{ userEditForm.avatar.vars.id }}"
+               name="{{ userEditForm.avatar.vars.full_name }}"
+               class="form-control {% if userEditForm.avatar.vars.errors is not empty %}is-invalid{% elseif userEditForm.avatar.vars.value is not empty and isSubmitted %}is-valid{% endif %}">
+        {% if userEditForm.avatar.vars.errors|length > 0 %}
+            {% include '@molecules/error.html.twig' with {'error': userEditForm.avatar.vars.errors} %}
+        {% endif %}
+    </div>
+    {{ form_row(userEditForm._token) }}
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

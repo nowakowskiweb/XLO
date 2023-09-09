@@ -24,38 +24,6 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstName', TextType::class, [
-                'label' => 'First Name',
-                'constraints' => [
-                    new Length([
-                        'max' => 50,
-                        'maxMessage' => 'Your first name should have at least {{ max }} characters',
-                    ]),
-                    new Regex([
-                        'pattern' => '/^[a-zA-Z]+$/',
-                        'message' => 'Your login should only contain letters.',
-                    ]),
-                    new NotBlank([
-                        'message' => 'Please enter your first name',
-                    ]),
-                ],
-            ])
-            ->add('lastName', TextType::class, [
-                'label' => 'Last Name',
-                'constraints' => [
-                    new Length([
-                        'max' => 50,
-                        'maxMessage' => 'Your last name should have at least {{ max }} characters',
-                    ]),
-                    new Regex([
-                        'pattern' => '/^[a-zA-Z]+$/',
-                        'message' => 'Your login should only contain letters.',
-                    ]),
-                    new NotBlank([
-                        'message' => 'Please enter your last name',
-                    ]),
-                ],
-            ])
             ->add('login', TextType::class, [
                 'label' => 'Login*',
                 'constraints' => [

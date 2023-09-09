@@ -19,8 +19,12 @@
                 <div class="col-12 col-md-3">
                     {% include '@molecules/sidebar-menu.html.twig' %}
                 </div>
-                <div class="col-12 col-md-3">
-DELETE
+                <div class="col-12 col-md-9">
+                    <form action="{{ path('user_delete') }}" method="POST">
+                        <p>Czy na pewno chcesz usunąć swoje konto?</p>
+                        {{ csrf_token('delete-account') }}
+                        <button type="submit">Tak, usuń moje konto</button>
+                    </form>
                 </div>
             </div>
         </div>
