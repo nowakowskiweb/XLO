@@ -37,49 +37,24 @@ class MailerController extends AbstractController
         return $this->render('registration/index.html.twig');
     }
 
-    #[Route('/email-change', name: 'mailer_email_change')]
+    #[Route('/reset-password-request', name: 'mailer_reset_password')]
+    public function resetPassword(MailerInterface $mailer, VerifyEmailHelperInterface $verifyEmailHelper): Response
+    {
+        $this->sendEmail($mailer, $verifyEmailHelper, 'nowakowski@gmail.com', 'Welcome typie');
+        return $this->render('registration/index.html.twig');
+    }
+
+    #[Route('/change-email-request', name: 'mailer_change_email')]
     public function changeEmail(MailerInterface $mailer, VerifyEmailHelperInterface $verifyEmailHelper): Response
     {
-        $user = $this->getUser();
-
-        $form = $this->createForm(UserEditProfileType::class,$user);
-        $this->sendEmail($mailer, $verifyEmailHelper, 'nowakowski@gmail.com', 'Zmien email');
-
-        return $this->render('@pages/user-edit.html.twig', [
-            'userEditForm' => $form->createView(),
-            'user' => $user,
-            'isSubmitted' => false
-        ]);
+        $this->sendEmail($mailer, $verifyEmailHelper, 'nowakowski@gmail.com', 'Welcome typie');
+        return $this->render('registration/index.html.twig');
     }
 
-    #[Route('/password-change', name: 'mailer_password_change')]
-    public function changePassword(MailerInterface $mailer, VerifyEmailHelperInterface $verifyEmailHelper): Response
-    {
-        $user = $this->getUser();
-
-        $form = $this->createForm(UserEditProfileType::class,$user);
-
-        $this->sendEmail($mailer, $verifyEmailHelper, 'nowakowski@gmail.com', 'Zmien hasło');
-        return $this->render('@pages/user-edit.html.twig', [
-            'userEditForm' => $form->createView(),
-            'user' => $user,
-            'isSubmitted' => false
-        ]);
-    }
-
-    #[Route('/account-delete', name: 'mailer_account_delete')]
+    #[Route('/delete-account-request', name: 'mailer_delete_account')]
     public function deleteAccount(MailerInterface $mailer, VerifyEmailHelperInterface $verifyEmailHelper): Response
     {
-        $user = $this->getUser();
-
-        $form = $this->createForm(UserEditProfileType::class,$user);
-
-
-        $this->sendEmail($mailer, $verifyEmailHelper, 'nowakowski@gmail.com', 'Usun konto');
-        return $this->render('@pages/user-edit.html.twig', [
-            'userEditForm' => $form->createView(),
-            'user' => $user,
-            'isSubmitted' => false
-        ]);
+        $this->sendEmail($mailer, $verifyEmailHelper, 'nowakowski@gmail.com', 'Welcome typie');
+        return $this->render('registration/index.html.twig');
     }
 }

@@ -34,16 +34,4 @@ class ResetPasswordRequest implements ResetPasswordRequestInterface
     {
         return $this->user;
     }
-
-    public function getRequestIp(): ?string
-    {
-        return $this->requestIp;
-    }
-
-    public function setRequestIp(string $requestIp): static
-    {
-        $this->requestIp = $requestIp;
-
-        return $this;
-    }
 }
