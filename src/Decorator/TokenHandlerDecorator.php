@@ -77,7 +77,7 @@ class TokenHandlerDecorator implements ResetPasswordHelperInterface
             ->from(new Address('testtt@gmail.com', 'Change Password'))
             ->to($user->getEmail())
             ->subject('Your password reset request')
-            ->htmlTemplate('reset_password/email.html.twig')
+            ->htmlTemplate('reset_password/password_reset.html.twig')
             ->context([
                 'resetToken' => $resetToken,
             ])
