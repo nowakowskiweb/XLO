@@ -34,27 +34,27 @@ class MailerController extends AbstractController
     public function registration(MailerInterface $mailer, VerifyEmailHelperInterface $verifyEmailHelper): Response
     {
         $this->sendEmail($mailer, $verifyEmailHelper, 'nowakowski@gmail.com', 'Welcome typie');
-        return $this->render('registration/index.html.twig');
+        return $this->render('@pages/registration.html.twig');
     }
 
     #[Route('/reset-password-request', name: 'mailer_reset_password')]
     public function resetPassword(MailerInterface $mailer, VerifyEmailHelperInterface $verifyEmailHelper): Response
     {
         $this->sendEmail($mailer, $verifyEmailHelper, 'nowakowski@gmail.com', 'Welcome typie');
-        return $this->render('registration/index.html.twig');
+        return $this->render('@pages/registration.html.twig');
     }
 
     #[Route('/change-email-request', name: 'mailer_change_email')]
     public function changeEmail(MailerInterface $mailer, VerifyEmailHelperInterface $verifyEmailHelper): Response
     {
         $this->sendEmail($mailer, $verifyEmailHelper, 'nowakowski@gmail.com', 'Welcome typie');
-        return $this->render('registration/index.html.twig');
+        return $this->render('@pages/registration.html.twig');
     }
 
     #[Route('/delete-account-request', name: 'mailer_delete_account')]
     public function deleteAccount(MailerInterface $mailer, VerifyEmailHelperInterface $verifyEmailHelper): Response
     {
         $this->sendEmail($mailer, $verifyEmailHelper, 'nowakowski@gmail.com', 'Welcome typie');
-        return $this->render('registration/index.html.twig');
+        return $this->render('@pages/registration.html.twig');
     }
 }

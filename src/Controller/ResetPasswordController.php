@@ -50,7 +50,7 @@ class ResetPasswordController extends AbstractController
             );
         }
 
-        return $this->render('reset_password/request.html.twig', [
+        return $this->render('@request/reset_password.html.twig', [
             'requestForm' => $form->createView(),
         ]);
     }
@@ -67,7 +67,7 @@ class ResetPasswordController extends AbstractController
             $resetToken = $this->resetPasswordHelp->generateFakeResetToken();
         }
 
-        return $this->render('reset_password/check_email.html.twig', [
+        return $this->render('@pages/password_check_email.html.twig', [
             'resetToken' => $resetToken,
         ]);
     }
@@ -122,10 +122,10 @@ class ResetPasswordController extends AbstractController
 
             // The session is cleaned up after the password has been changed.
             $this->cleanSessionAfterReset();
-            return $this->render('@pages/user-messages.html.twig');
+            return $this->render('user_messages.html.twig');
         }
 
-        return $this->render('reset_password/reset.html.twig', [
+        return $this->render('@pages/password_edit.html.twig', [
             'resetForm' => $form->createView(),
         ]);
     }
@@ -160,7 +160,7 @@ class ResetPasswordController extends AbstractController
             ->from(new Address('testtt@gmail.com', 'Change Password'))
             ->to($user->getEmail())
             ->subject('Your password reset request')
-            ->htmlTemplate('reset_password/email.html.twig')
+            ->htmlTemplate('reset_password/password_reset.twig')
             ->context([
                 'resetToken' => $resetToken,
             ])
@@ -171,6 +171,6 @@ class ResetPasswordController extends AbstractController
         // Store the token object in session for retrieval in check-email route.
         $this->setTokenObjectInSession($resetToken);
 
-        return $this->redirectToRoute('app_check_email');
+        return $this->redirectToRoute('@pages/password_check_email.html/twig');
     }
 }

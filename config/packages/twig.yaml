@@ -3,6 +3,7 @@ twig:
     paths:
         '%kernel.project_dir%/templates/layouts': layouts
         '%kernel.project_dir%/templates/pages': pages
+        '%kernel.project_dir%/templates/request': request
         '%kernel.project_dir%/templates/components/atoms': atoms
         '%kernel.project_dir%/templates/components/forms': forms
         '%kernel.project_dir%/templates/components/molecules': molecules

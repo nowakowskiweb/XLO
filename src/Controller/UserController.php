@@ -40,23 +40,22 @@ class UserController extends AbstractController
 
         $form = $this->createForm(UserEditProfileType::class, $user);
         $form->handleRequest($request);
-        $isSubmitted = $form->isSubmitted();
 
-        if ($isSubmitted && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($user);  // to jest opcjonalne jeśli użytkownik jest już zarządzany przez EntityManagera
             $this->entityManager->flush();
 
-            return $this->render('@pages/user-edit.html.twig', [
+            return $this->render('@pages/user_edit.html.twig', [
                 'userEditForm' => $form->createView(),
                 'user' => $user,
-                'isSubmitted' => false
+                'isSubmitted' => true
             ]);
         }
 
-        return $this->render('@pages/user-edit.html.twig', [
+        return $this->render('@pages/user_edit.html.twig', [
             'userEditForm' => $form->createView(),
             'user' => $user,
-            'isSubmitted' => $isSubmitted
+            'isSubmitted' => $form->isSubmitted()
         ]);
     }
 
@@ -72,7 +71,7 @@ class UserController extends AbstractController
         // Pobieramy paginowane ogłoszenia z uwzględnieniem filtrów
         $announcements = $this->userRepository->findsFavoriteAnnouncementsPaginated($page, 10, $user);
 
-        return $this->render('@pages/user-favorites.html.twig', [
+        return $this->render('@pages/user_favorites.html.twig', [
             'announcements' => $announcements,
         ]);
     }
@@ -86,7 +85,7 @@ class UserController extends AbstractController
 
         $announcements = $this->announcementRepository->findsPostedAnnouncementsPaginated($page, 10, $user);
 
-        return $this->render('@pages/user-posted.html.twig', [
+        return $this->render('@pages/user_posted.html.twig', [
             'announcements' => $announcements,
         ]);
     }
@@ -95,13 +94,20 @@ class UserController extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
     public function messages(Request $request): Response
     {
-        return $this->render('@pages/user-messages.html.twig');
+        return $this->render('@pages/user_messages.html.twig');
     }
 
     #[Route('/user/favorite/add', name: 'user_favorite_add')]
     #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
     public function favoriteAdd(Request $request): Response
     {
-        return $this->render('@pages/user-favorite.html.twig');
+        return $this->render('@pages/user_favorite.html.twig');
+    }
+
+    #[Route('/delete', name: 'user_delete')]
+    #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
+    public function accountDelete(Request $request): Response
+    {
+        return $this->render('@pages/user_favorite.html.twig');
     }
 }

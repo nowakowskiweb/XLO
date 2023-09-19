@@ -55,7 +55,7 @@ class AnnouncementController extends BaseController
             }
         }
 
-        return $this->render('@pages/announcements-index.html.twig', [
+        return $this->render('@pages/announcements_index.html.twig', [
             'announcements' => $announcements,
             'categories' => $categories,
             'conditions' => $conditions,
@@ -100,7 +100,7 @@ class AnnouncementController extends BaseController
             return $this->redirectToRoute('app_homepage');
         }
 
-        return $this->render('@pages/announcements-add.html.twig', [
+        return $this->render('@pages/announcements_add.html.twig', [
             'announcementForm' => $form->createView(),
         ]);
     }
@@ -111,7 +111,7 @@ class AnnouncementController extends BaseController
     {
         $announcement = $this->announcementRepository->find($id);
 
-        return $this->render('@pages/announcements-show.html.twig', [
+        return $this->render('@pages/announcements_show.html.twig', [
             'announcement' => $announcement
         ]);
     }
