@@ -18,9 +18,11 @@
         'page': announcements.page,
         'categories': categories,
         'conditions': conditions,
-        'sorting': sorting } %}
+        'sorting': sorting,
+    } %}
     {% include '@sections/list.html.twig' with {
         'data': announcements,
+        'favorites': favorites,
         'paginationFilters': paginationFilters,
     } %}
 {% endblock %}

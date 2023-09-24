@@ -51,6 +51,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\ManyToMany(targetEntity: Announcement::class, inversedBy: 'favoritedBy', fetch: "EAGER")]
     private Collection $favoriteAnnouncements;
 
+    #[ORM\OneToMany(targetEntity: DeleteAccountRequest::class, mappedBy: "user", cascade: ["remove"])]
+    private Collection $deleteRequests;
+
     public function __construct()
     {
         $this->announcements = new ArrayCollection();

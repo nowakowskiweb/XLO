@@ -34,6 +34,10 @@ services:
     App\DataFixtures\AnnouncementFixtures:
         tags: [ 'doctrine.fixture.orm' ]
         # ...
-
+    App\Service\DeleteAccountService:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
+            $tokenGenerator: '@security.csrf.token_generator'
+            $deleteAccountRepository: '@App\Repository\DeleteAccountRequestRepository'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

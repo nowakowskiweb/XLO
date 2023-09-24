@@ -6,10 +6,15 @@
        class="uppercase border border-gray-500 text-gray-600 text-lg py-4 px-12 rounded transition transition-all hover:bg-gray-800 hover:text-white">
         SHOW
     </a>
-{#    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}#}
-{#        <a href="{{ path('user_add_favorite') }}"#}
-{#           class="uppercase border border-gray-500 text-gray-600 text-lg py-4 px-12 rounded transition transition-all hover:bg-gray-800 hover:text-white">#}
-{#            Favorite#}
-{#        </a>#}
-{#    {% endif %}#}
+    {% if isFavorite %}
+        <a href="{{ path('user_favorite_delete', {'announcementId': card.id}) }}">
+            Delete to Favorites
+        </a>
+    {% else %}
+        <a href="{{ path('user_favorite_add', {'announcementId': card.id}) }}">
+            Add to Favorites
+        </a>
+    {% endif %}
+    {# Przycisk dodawania do ulubionych #}
+
 </div>

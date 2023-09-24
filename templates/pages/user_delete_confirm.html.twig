@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h3>Czy jesteś pewny, że chcesz usunąć konto?</h3>
+
+    {{ form_start(form) }}
+    {{ form_widget(form.confirm) }}
+    {{ form_end(form) }}
+{% endblock %}

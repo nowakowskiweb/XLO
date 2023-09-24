@@ -2,8 +2,6 @@
 
 namespace App\Controller;
 
-use App\Decorator\TokenHandlerDecorator;
-use App\Decorator\TokenTraitControllerDecorator;
 use App\Entity\User;
 use App\Form\ChangePasswordFormType;
 use App\Form\ResetPasswordRequestFormType;

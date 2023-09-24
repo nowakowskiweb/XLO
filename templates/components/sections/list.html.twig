@@ -1,8 +1,9 @@
 <section class="list">
     <div class="list__container container">
         {% for item in data.items %}
+            {% set isFavorite = item in favorites %}
             <div class="list__item">
-                {% include '@molecules/card.html.twig' with {'card': item} %}
+                {% include '@molecules/card.html.twig' with {'card': item, 'isFavorite': isFavorite} %}
             </div>
         {% endfor %}
 

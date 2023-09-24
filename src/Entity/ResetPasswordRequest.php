@@ -11,11 +11,13 @@ use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestTrait;
 class ResetPasswordRequest implements ResetPasswordRequestInterface
 {
     use ResetPasswordRequestTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    #[ORM\ManyToOne]
+
+    #[ORM\ManyToOne(targetEntity: User::class, cascade: ["persist", "remove"])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 

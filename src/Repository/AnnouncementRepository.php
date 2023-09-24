@@ -116,6 +116,16 @@ class AnnouncementRepository extends ServiceEntityRepository
         return $result;
     }
 
+    public function findFavoritesForUser($userId)
+    {
+        return $this->createQueryBuilder('a')
+            ->join('a.favoritedBy', 'f')
+            ->where('f.id = :userId')
+            ->setParameter('userId', $userId)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findsPostedAnnouncementsPaginated(int $page, int $limit = 10, $user): array
     {
         $limit = abs($limit);

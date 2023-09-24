@@ -5,11 +5,9 @@ namespace App\Entity;
 use App\Entity\Trait\TokenRequestTrait;
 use App\Repository\DeleteAccountRequestRepository;
 use Doctrine\ORM\Mapping as ORM;
-use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestInterface;
-use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestTrait;
 
 #[ORM\Entity(repositoryClass: DeleteAccountRequestRepository::class)]
-class DeleteAccountRequest implements ResetPasswordRequestInterface
+class DeleteAccountRequest
 {
     use TokenRequestTrait;
     #[ORM\Id]
@@ -17,7 +15,7 @@ class DeleteAccountRequest implements ResetPasswordRequestInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 

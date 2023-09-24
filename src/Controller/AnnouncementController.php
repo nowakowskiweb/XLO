@@ -34,6 +34,7 @@ class AnnouncementController extends BaseController
         $page = $request->query->getInt('page', 1);
 
         $announcements = $this->announcementRepository->findsAnnouncementsPaginated($page, 10, $request);
+        $favorites = $this->announcementRepository->findFavoritesForUser($this->getUser()->getId());
 
         $sorting = SortingType::getSorting();
         $conditions = ConditionType::getConditions();
@@ -60,7 +61,8 @@ class AnnouncementController extends BaseController
             'categories' => $categories,
             'conditions' => $conditions,
             'sorting' => $sorting,
-            'paginationFilters' => $output
+            'paginationFilters' => $output,
+            'favorites' => $favorites
         ]);
     }
 
