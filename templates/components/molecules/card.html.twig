@@ -6,14 +6,16 @@
        class="uppercase border border-gray-500 text-gray-600 text-lg py-4 px-12 rounded transition transition-all hover:bg-gray-800 hover:text-white">
         SHOW
     </a>
-    {% if isFavorite %}
-        <a href="{{ path('user_favorite_delete', {'announcementId': card.id}) }}">
-            Delete to Favorites
-        </a>
-    {% else %}
-        <a href="{{ path('user_favorite_add', {'announcementId': card.id}) }}">
-            Add to Favorites
-        </a>
+    {% if app.user %}  {# Sprawdzenie, czy użytkownik jest zalogowany #}
+        {% if isFavorite %}
+            <a href="{{ path('user_favorite_delete', {'announcementId': card.id}) }}">
+                Delete from Favorites
+            </a>
+        {% else %}
+            <a href="{{ path('user_favorite_add', {'announcementId': card.id}) }}">
+                Add to Favorites
+            </a>
+        {% endif %}
     {% endif %}
     {# Przycisk dodawania do ulubionych #}
 

@@ -71,8 +71,10 @@ class UserController extends AbstractController
 
         // Pobieramy paginowane ogłoszenia z uwzględnieniem filtrów
         $announcements = $this->userRepository->findsFavoriteAnnouncementsPaginated($page, 10, $user);
-        $favorites = $this->announcementRepository->findFavoritesForUser($this->getUser()->getId());
-
+        $favorites = [];
+        if ($this->getUser()) {
+            $favorites = $this->announcementRepository->findFavoritesForUser($this->getUser()->getId());
+        }
 
         return $this->render('@pages/user_favorites.html.twig', [
             'announcements' => $announcements,
@@ -88,8 +90,10 @@ class UserController extends AbstractController
         $page = $request->query->getInt('page', 1);
 
         $announcements = $this->announcementRepository->findsPostedAnnouncementsPaginated($page, 10, $user);
-        $favorites = $this->announcementRepository->findFavoritesForUser($this->getUser()->getId());
-
+        $favorites = [];
+        if ($this->getUser()) {
+            $favorites = $this->announcementRepository->findFavoritesForUser($this->getUser()->getId());
+        }
         return $this->render('@pages/user_posted.html.twig', [
             'announcements' => $announcements,
             'favorites' => $favorites,
