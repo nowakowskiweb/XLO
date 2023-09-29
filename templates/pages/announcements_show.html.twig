@@ -1,17 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-    {{ encore_entry_link_tags('announcements-list/style') }}
+    {{ encore_entry_link_tags('announcements-show/style') }}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('announcements-list/script') }}
+    {{ encore_entry_script_tags('announcements-show/script') }}
 {% endblock %}
 
 
 {% block title %}Hello AnnouncementController!{% endblock %}
 
 {% block body %}
-<h1>SHOW</h1>
+    {% include '@sections/annoucement_info.html.twig' with {'announcement': announcement } %}
+    {% include '@sections/annoucement_description.html.twig' %}
 {% endblock %}

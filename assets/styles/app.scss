@@ -1,7 +1,6 @@
 /** Bootstrap */
 @import "bootstrap";
 
-
 /** Global */
 @import "helpers/functions.scss";
 @import "layouts/fonts.scss";
@@ -12,4 +11,3 @@
 
 /** Packages */
 @import '~tom-select/dist/scss/tom-select.bootstrap5';
-

@@ -9,6 +9,7 @@ use App\Form\UserEditProfileType;
 use App\Repository\AnnouncementRepository;
 use App\Repository\UserRepository;
 use App\Service\DeleteAccountService;
+use App\Services\ImageService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -35,7 +36,7 @@ class UserController extends AbstractController
 
     #[Route('/edit', name: 'user_edit')]
     #[IsGranted('IS_AUTHENTICATED_REMEMBERED')]
-    public function accountEdit(Request $request): Response
+    public function accountEdit(Request $request,ImageService $imageService, EntityManagerInterface $entityManager): Response
     {
         $user = $this->getUser();
 
@@ -45,6 +46,16 @@ class UserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($user);  // to jest opcjonalne jeśli użytkownik jest już zarządzany przez EntityManagera
             $this->entityManager->flush();
+
+            if ($form->get('avatar')->getData()) {
+                $avatar = $form->get('avatar')->getData();
+
+                $image = $imageService->add($avatar, 'avatars');
+                $user->setAvatar($image);
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+            }
 
             return $this->render('@pages/user_edit.html.twig', [
                 'userEditForm' => $form->createView(),

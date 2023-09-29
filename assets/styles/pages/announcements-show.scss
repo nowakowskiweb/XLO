@@ -1,0 +1,16 @@
+/** Global styles: variables/fonts/helpers modules */
+@import "../app.scss";
+
+/** Override Navbar */
+.navbar {
+  background-color: #EAC6B7;
+}
+
+header {
+  margin-bottom: 200px;
+}
+
+/** Announcement Sections */
+@import "@sections-styles/filters.scss";
+@import "@sections-styles/list.scss";
+@import '@helpers-styles/_swiper.scss';

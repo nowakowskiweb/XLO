@@ -22,6 +22,7 @@ Encore
      */
     .addEntry('app', './assets/scripts/app.js')
     .addEntry('announcements-add/script', './assets/scripts/pages/announcement-add.js')
+    .addEntry('announcements-show/script', './assets/scripts/pages/announcement-show.js')
     .addEntry('announcements-list/script', './assets/scripts/pages/announcement-list.js')
     .addEntry('announcements-favorite/script', './assets/scripts/pages/announcement-favorite.js')
     .addEntry('homepage/script', './assets/scripts/pages/homepage.js')
@@ -31,6 +32,7 @@ Encore
 
 
     .addStyleEntry('announcements-add/style', './assets/styles/pages/announcements-add.scss')
+    .addStyleEntry('announcements-show/style', './assets/styles/pages/announcements-show.scss')
     .addStyleEntry('announcements-list/style', './assets/styles/pages/announcements-list.scss')
     .addStyleEntry('announcements-favorite/style', './assets/styles/pages/announcements-favorite.scss')
     .addStyleEntry('homepage/style', './assets/styles/pages/homepage.scss')

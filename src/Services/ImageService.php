@@ -20,16 +20,18 @@ class ImageService
     {
         $image = new Image();
 
-        $fileName = md5(uniqid(rand(), true));
+        $extension = $this->getExtensionFromMime($file->getMimeType());
+        $fileName = md5(uniqid(rand(), true)) . $extension;
         $originalFileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $path = $this->params->get('images_directory') . $folder;
+
 
         $image->setName($fileName);
         $image->setOriginalName($originalFileName);
         $image->setPath($path);
 
 
-        $file->move($path . '/', $fileName . $this->getExtensionFromMime($file->getMimeType()));
+        $file->move($path . '/', $fileName);
 
         return $image;
     }
