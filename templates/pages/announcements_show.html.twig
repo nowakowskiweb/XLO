@@ -14,5 +14,5 @@
 
 {% block body %}
     {% include '@sections/annoucement_info.html.twig' with {'announcement': announcement } %}
-    {% include '@sections/annoucement_description.html.twig' %}
+    {% include '@sections/annoucement_description.html.twig' with {'description': announcement.description } %}
 {% endblock %}

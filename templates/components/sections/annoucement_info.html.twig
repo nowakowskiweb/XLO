@@ -1,12 +1,25 @@
 <section class="announcement-info">
     <div class="container">
         <div class="row">
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-6">
                 {% include '@molecules/announcement_slider.html.twig' with {'images': announcement.images } %}
             </div>
             <div class="col-12 col-md-6">
-                tu będzie tekst
+                <h2>{{ announcement.title }}</h2>
+                <div class="d-flex justify-content-between">
+                    <p>Cena: {{ announcement.price }}</p>
+                    <div class="text-end">
+                        <p>Województwo: {{ announcement.voivodeship }}</p>
+                        <p>Miasto: {{ announcement.city }}</p>
+                        <p>Zużycie: {{ announcement.conditionType }}</p>
+                    </div>
+                </div>
+                <div>
+                    <p>Sprzedający: {{ announcement.user.login }}</p>
+                    <a>Napisz wiadomość do sprzedającego</a>
+                </div>
             </div>
         </div>
+    </div>
     </div>
 </section>

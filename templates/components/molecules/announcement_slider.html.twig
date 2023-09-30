@@ -1,13 +1,10 @@
-<div>
-    <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-            <!-- Slides -->
-            {% for image in announcement.images %}
-                <div class="swiper-slide">
-                    <img src="{{ asset(image.path ~ image.name) }}" alt="{{ announcement.title }}"/>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="swiper-pagination"></div>
+<div class="swiper mySwiper">
+    <div class="swiper-wrapper">
+        {% for image in announcement.images %}
+            <div class="swiper-slide">
+                <img src="{{ asset(image.path ~ image.name) }}" alt="{{ announcement.title }}"/>
+            </div>
+        {% endfor %}
     </div>
+    <div class="swiper-pagination"></div>
 </div>
